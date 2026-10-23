@@ -1,0 +1,681 @@
+<title>Forever Spellbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#f3efe6;--panel:#fbf8f2;--panel2:#ece6d9;--line:#d6cdbb;--fg:#24201a;--muted:#6e6555;--faint:#9a907d;
+  --accent:#9a6a12;--accent-fg:#fff;--slot:#e6dfd0;--slot-line:#c9bea7;--danger:#a3322a;--ok:#3d7a3a;
+  --tip:#1d1a15;--tip-fg:#f2ead9;--shadow:0 6px 24px rgba(40,30,10,.18);
+  --cls:#AAD372;
+  --r-interrupt:#c0392b;--r-cc:#8e44ad;--r-stun:#d35400;--r-snare:#2e86c1;--r-taunt:#b9770e;--r-purge:#16a085;--r-dispel:#1abc9c;
+  --r-defensive:#7f8c8d;--r-mobility:#27ae60;--r-burst:#e67e22;--r-threat_drop:#566573;--r-debuff:#7d3c98;--r-stealth:#34495e;
+  --r-res:#d4ac0d;--r-mount:#8d6e63;--r-trinket1:#b7950b;--r-trinket2:#b7950b;--r-pet:#a04000;--r-heal:#229954;--r-buff:#2874a6;--r-damage:#943126;--r-utility:#6c757d;--r-passive:#95a5a6;--r-racial:#5d6d7e;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#13110e;--panel:#1c1915;--panel2:#25211b;--line:#3a332a;--fg:#ece3d0;--muted:#a59a85;--faint:#756b5a;
+  --accent:#e0b14a;--accent-fg:#1a140a;--slot:#0d0c0a;--slot-line:#4a4033;--danger:#e0675d;--ok:#7cc070;
+  --tip:#0b0a08;--tip-fg:#efe6d2;--shadow:0 8px 30px rgba(0,0,0,.55);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13110e;--panel:#1c1915;--panel2:#25211b;--line:#3a332a;--fg:#ece3d0;--muted:#a59a85;--faint:#756b5a;
+  --accent:#e0b14a;--accent-fg:#1a140a;--slot:#0d0c0a;--slot-line:#4a4033;--danger:#e0675d;--ok:#7cc070;
+  --tip:#0b0a08;--tip-fg:#efe6d2;--shadow:0 8px 30px rgba(0,0,0,.55);color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font:14px/1.45 "IBM Plex Sans Condensed",system-ui,sans-serif;padding-inline:16px;padding-block:0}
+button,select,input{font:inherit;color:inherit}
+button{cursor:pointer}
+.wrap{max-width:1500px;margin:0 auto;padding-block:14px 300px}
+header.top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:10px}
+h1{font:700 22px/1.1 Cinzel,Georgia,serif;margin:0;letter-spacing:.02em}
+.sub{color:var(--muted);font-size:12.5px}
+.save-chip{margin-left:auto;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.save-chip i{width:8px;height:8px;border-radius:50%;background:var(--faint);display:inline-block}
+.save-chip.ok i{background:var(--ok)} .save-chip.local i{background:var(--accent)} .save-chip.busy i{background:var(--accent);animation:p 1s infinite}
+@keyframes p{50%{opacity:.3}}
+nav.classes{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:thin}
+nav.classes button{border:0;background:none;padding:8px 12px 9px;font:600 14px Cinzel,Georgia,serif;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap}
+nav.classes button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--c)}
+nav.classes button:hover{color:var(--fg)}
+.charbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:end;padding:12px 0;border-bottom:1px solid var(--line)}
+.field{display:flex;flex-direction:column;gap:3px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.field select,.field input[type=text]{text-transform:none;letter-spacing:0;font-size:14px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:5px 8px;min-width:0}
+.lvl{display:flex;align-items:center;gap:8px}
+.lvl input[type=range]{width:150px;accent-color:var(--cls)}
+.lvl{gap:6px}
+.lvbtn{width:28px;height:28px;padding:0;font-size:16px;line-height:1}
+.lvl input[type=number]{width:56px;font:500 15px "IBM Plex Mono",monospace;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:3px 6px;text-align:center;color:var(--fg)}
+.pts{font:500 13px "IBM Plex Mono",monospace;text-transform:none;letter-spacing:0;color:var(--fg)}
+.pts.over{color:var(--danger)}
+.btn{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:5px 10px;font-size:13px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.btn.small{padding:2px 7px;font-size:12px}
+.btn.danger{color:var(--danger)}
+.btn[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.spacer{flex:1}
+.views{display:flex;gap:4px;margin:12px 0 10px}
+.views button{border:1px solid var(--line);background:var(--panel);padding:5px 12px;border-radius:999px;font-size:13px}
+.views button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px;align-items:start}
+@media (max-width:980px){.layout{grid-template-columns:minmax(0,1fr)}}
+/* tiles */
+.tile{--rc:var(--r-utility);width:40px;height:40px;border-radius:6px;flex:none;position:relative;display:grid;place-items:center;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--rc) 85%,#fff 15%),color-mix(in srgb,var(--rc) 70%,#000 30%));
+  color:#fff;font:600 13px "IBM Plex Sans Condensed",sans-serif;text-shadow:0 1px 2px rgba(0,0,0,.6);box-shadow:inset 0 0 0 1px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.25);letter-spacing:.02em;user-select:none}
+.tile.passive{filter:saturate(.25);opacity:.8;border-radius:50%}
+.tile .ici{position:absolute;inset:0;width:100%;height:100%;border-radius:inherit;display:block;pointer-events:none}
+.tile.ic{overflow:hidden;background:#000;box-shadow:inset 0 0 0 1px rgba(0,0,0,.6),0 0 0 1px rgba(0,0,0,.35)}
+.tile.ic::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--rc);border-radius:0 0 5px 5px;opacity:.95}
+.tile.ic.passive{filter:saturate(.55);opacity:.9;border-radius:6px}
+.tile.ic.passive::after{display:none}
+.tal .tile.ic::after{display:none}
+.tal.off .tile.ic{filter:grayscale(1) brightness(.6);opacity:.7}
+.tile.locked{filter:grayscale(1);opacity:.45}
+/* spellbook */
+.group{margin-bottom:18px}
+.group h3{font:600 12px "IBM Plex Sans Condensed";text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:0 0 8px;display:flex;gap:8px;align-items:center}
+.group h3 span{color:var(--faint);font-weight:400}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px}
+.spell{display:flex;gap:9px;align-items:center;padding:5px 8px 5px 5px;border:1px solid transparent;border-radius:8px;background:var(--panel);cursor:grab;min-width:0;text-align:left;width:100%}
+.spell:hover{border-color:var(--line)}
+.spell.armed{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 35%,transparent)}
+.spell.sel{border-color:var(--fg)}
+.spell .nm{font-weight:600;font-size:13.5px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.spell .meta{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.spell .txt{min-width:0;flex:1}
+.spell.nodrag{cursor:default}
+.spell.dim{opacity:.55}
+.tag{display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:0 5px;border-radius:3px;background:var(--panel2);color:var(--muted);margin-left:4px;vertical-align:1px}
+/* filters */
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.filters input[type=search]{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:5px 9px;width:200px;max-width:100%}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:2px 9px;font-size:12px;display:inline-flex;gap:5px;align-items:center}
+.chip i{width:8px;height:8px;border-radius:2px;background:var(--rc)}
+.chip[aria-pressed="true"]{border-color:var(--fg);background:var(--panel2)}
+/* details */
+aside.detail{position:sticky;top:12px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;max-height:calc(100vh - 290px);overflow:auto}
+aside.detail .hd{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+aside.detail h2{font:700 17px/1.15 Cinzel,Georgia,serif;margin:0}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:12.5px;margin:8px 0}
+.kv dt{color:var(--muted)} .kv dd{margin:0;font-variant-numeric:tabular-nums}
+.desc{font-size:13.5px;max-width:65ch}
+.changes{font-size:12px;color:var(--muted);border-left:2px solid var(--accent);padding-left:8px;margin-top:10px}
+.changes li{margin-bottom:3px}
+.empty{color:var(--muted);font-size:13px}
+a{color:var(--accent)}
+/* talents */
+.trees{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.trees{grid-template-columns:minmax(0,1fr)}}
+.tree{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px}
+.tree .th{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.tree .th b{font:700 14px Cinzel,Georgia,serif}
+.tree .th .role{font-size:11px;color:var(--muted)}
+.tree .th .sp{margin-left:auto;font:500 13px "IBM Plex Mono",monospace}
+.tgrid{display:grid;grid-template-columns:repeat(4,44px);grid-template-rows:repeat(7,50px);gap:4px 10px;width:206px;margin:0 auto;position:relative}
+.tgrid svg.arrows{position:absolute;left:0;top:0;width:206px;height:374px;pointer-events:none;z-index:0;overflow:visible}
+.arrows path{fill:none;stroke-width:3;stroke-linejoin:round}
+.arrows .on{stroke:#e0b14a}.arrows .off{stroke:var(--faint);opacity:.7}
+.arrows .ah-on{fill:#e0b14a}.arrows .ah-off{fill:var(--faint);opacity:.7}
+.tal.miss~svg,.tgrid:has(.tal.miss) svg.arrows{opacity:.25}
+.tal{position:relative;z-index:1;border:0;background:none;padding:0;width:44px;height:44px}
+.tal .tile{width:44px;height:44px;font-size:12px}
+.tal.off .tile{filter:grayscale(1) brightness(.75);opacity:.55}
+.tal.can .tile{box-shadow:inset 0 0 0 2px #3fbf4a}
+.tal.full .tile{box-shadow:inset 0 0 0 2px #e0b14a}
+.tal.act .tile{border-radius:3px}
+.tal .rk{position:absolute;right:-6px;bottom:-5px;background:var(--tip);color:var(--tip-fg);font:500 10.5px "IBM Plex Mono";padding:0 3px;border-radius:3px;border:1px solid var(--line)}
+.tal.full .rk{color:#e0b14a}
+.tal.can .rk{color:#7ddf7f}
+.tal .star{position:absolute;left:-4px;top:-5px;font-size:11px;color:var(--accent)}
+.hint{font-size:12px;color:var(--muted);margin:8px 0 0}
+/* bars */
+.dock{position:fixed;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--panel) 94%,transparent);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:8px 16px calc(10px + env(safe-area-inset-bottom,0px));z-index:20;box-shadow:var(--shadow)}
+.dock-in{max-width:1500px;margin:0 auto}
+.dock-hd{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;font-size:12px;color:var(--muted)}
+.dock-hd b{color:var(--fg);font:600 13px Cinzel,Georgia,serif}
+.bars{display:flex;gap:18px 34px;flex-wrap:wrap;align-items:flex-start;overflow-x:auto;padding-bottom:2px}
+.pad{display:flex;flex-direction:column;gap:4px}
+.pad h4{margin:0 0 2px;font:600 11px "IBM Plex Sans Condensed";text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.pad h4 span{font-weight:400;color:var(--faint);text-transform:none;letter-spacing:0}
+.prow{display:flex;gap:4px}
+@media (max-width:900px){.dock{position:static;box-shadow:none;padding-inline:0;background:none;border-top:1px solid var(--line);margin-top:20px}.wrap{padding-block:14px 20px}}
+.slot{width:46px;height:46px;flex:none;border-radius:7px;background:var(--slot);border:1px solid var(--slot-line);position:relative;display:grid;place-items:center;padding:0}
+.slot.over{outline:2px solid var(--accent);outline-offset:1px}
+.slot .tile{width:42px;height:42px;cursor:grab}
+.slot .kb{position:absolute;right:3px;top:1px;font:500 10px "IBM Plex Mono";color:#fff;text-shadow:0 0 3px #000,0 0 2px #000;z-index:2;pointer-events:none}
+.slot .rl{position:absolute;inset:auto 0 2px 0;text-align:center;font-size:9px;text-transform:uppercase;letter-spacing:.04em;color:var(--faint);pointer-events:none;line-height:1}
+.slot.role{border-style:dashed;border-color:var(--rc)}
+.slot.auto .tile{opacity:.82}
+.slot.auto::after{content:"auto";position:absolute;left:3px;bottom:1px;font-size:8.5px;color:#fff;text-shadow:0 0 3px #000;text-transform:uppercase}
+.slot .x{position:absolute;left:-5px;top:-6px;width:16px;height:16px;border-radius:50%;border:1px solid var(--line);background:var(--panel);font-size:10px;line-height:13px;display:none;z-index:3;padding:0}
+.slot:hover .x{display:block}
+.slot .rl.pin{color:var(--rc);font-weight:600}
+.pad.edit .slot{cursor:pointer}
+.trash{border:1px dashed var(--line);border-radius:7px;padding:4px 10px;font-size:12px;color:var(--muted)}
+.trash.over{border-color:var(--danger);color:var(--danger)}
+.ghost{position:fixed;z-index:80;pointer-events:none;opacity:.9;transform:scale(1.08);filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
+.ghost .tile{width:42px;height:42px}
+body.dragging,body.dragging *{cursor:grabbing!important;user-select:none}
+.bookbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:0 0 12px}
+.missbtn{display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
+.missbtn .cnt{font:500 11px "IBM Plex Mono";background:var(--panel2);border-radius:999px;padding:0 6px}
+.missbtn[aria-pressed="true"] .cnt{background:rgba(0,0,0,.18)}
+.spell.missing{border-color:#e0b14a;animation:glow 1.6s ease-in-out infinite}
+.spell.missing .tile{box-shadow:0 0 0 2px #e0b14a,0 0 10px 2px rgba(224,177,74,.75)}
+.spell.missing .nm::after{content:" ✦";color:#d4a017}
+@keyframes glow{0%,100%{box-shadow:0 0 0 1px rgba(224,177,74,.5),0 0 6px rgba(224,177,74,.25)}50%{box-shadow:0 0 0 2px rgba(224,177,74,.9),0 0 16px rgba(224,177,74,.55)}}
+@media (prefers-reduced-motion:reduce){.spell.missing{animation:none;box-shadow:0 0 0 2px rgba(224,177,74,.8)}}
+.talsearch{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 12px}
+.talsearch input{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:6px 10px;width:320px;max-width:100%}
+.tal.miss{opacity:.22}
+.tal.hit{z-index:1}
+.tal.hit .tile{box-shadow:0 0 0 2px #e0b14a,0 0 12px 3px rgba(224,177,74,.8)!important;animation:talglow 1.6s ease-in-out infinite}
+.tal.off.hit .tile{filter:grayscale(.35) brightness(.95);opacity:1}
+@keyframes talglow{50%{box-shadow:0 0 0 2px #ffd970,0 0 18px 5px rgba(224,177,74,.9)}}
+@media (prefers-reduced-motion:reduce){.tal.hit .tile{animation:none}}
+mark{background:rgba(224,177,74,.45);color:inherit;border-radius:2px;padding:0 1px}
+.tip .nx{color:#7ddf7f;margin-top:7px;font-size:11.5px}
+ol.ranks{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:5px;font-size:13px}
+ol.ranks li{padding:5px 8px;border-radius:6px;border:1px solid var(--line);color:var(--muted)}
+ol.ranks li span{display:block;font:600 10.5px "IBM Plex Sans Condensed";text-transform:uppercase;letter-spacing:.06em;color:var(--faint)}
+ol.ranks li.done{color:var(--fg)}
+ol.ranks li.cur{color:var(--fg);border-color:#e0b14a;background:color-mix(in srgb,#e0b14a 10%,transparent)}
+ol.ranks li.cur span{color:#b8860b}
+.tagrow{display:flex;flex-wrap:wrap;gap:6px;margin:-4px 0 12px}
+.ttag{cursor:pointer}
+.ttag .tn{font:500 10.5px "IBM Plex Mono";color:var(--faint)}
+.ttag[aria-pressed="true"]{background:#e0b14a;border-color:#e0b14a;color:#1a140a}
+.ttag[aria-pressed="true"] .tn{color:#1a140a;opacity:.7}
+.ttag-clear{color:var(--muted)}
+.io{display:flex;gap:6px}
+.iomsg{font-size:12px;color:var(--ok)}
+.armedmsg{color:var(--accent);font-weight:600}
+/* tooltip */
+.tip{position:fixed;z-index:50;max-width:330px;background:var(--tip);color:var(--tip-fg);border:1px solid #5a4e3a;border-radius:6px;padding:9px 11px;font-size:12.5px;pointer-events:none;box-shadow:var(--shadow)}
+.tip b{font-size:14px;display:block;color:#fff}
+.tip .r{display:flex;justify-content:space-between;gap:12px;color:#d9cfb9}
+.tip .d{color:#ffd970;margin-top:5px}
+.tip .g{color:#9a907d;font-size:11.5px;margin-top:4px}
+/* slot editor popover */
+.pop{position:fixed;z-index:60;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px;box-shadow:var(--shadow);width:260px;display:flex;flex-direction:column;gap:8px}
+.pop label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+.pop select,.pop input{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:5px 8px;text-transform:none;letter-spacing:0;font-size:14px}
+.pop .row{display:flex;gap:6px;justify-content:flex-end}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:59}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+footer{color:var(--faint);font-size:11.5px;margin-top:24px}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <h1>Forever Spellbook</h1>
+    <span class="sub">WoW Forever abilities, talents and action bars · data from Wowhead, pulled <span id="pulled"></span></span>
+    <span class="save-chip" id="saveChip"><i></i><span>Connecting…</span></span>
+    <span class="io"><button class="btn small" id="exportBtn" title="Save all your builds, bars and keybinds to a file">Export</button><button class="btn small" id="importBtn" title="Load builds from an exported file">Import</button><input type="file" id="importFile" accept=".json,application/json" hidden></span>
+    <span class="iomsg" id="ioMsg" role="status"></span>
+  </header>
+  <nav class="classes" id="classTabs" role="tablist"></nav>
+  <section class="charbar" id="charbar"></section>
+  <div class="views" role="tablist" id="views"></div>
+  <div class="layout">
+    <main id="main" style="min-width:0"></main>
+    <aside class="detail" id="detail"><p class="empty">Hover or click an ability to see its full tooltip. Drag abilities onto the bars below, or click one and then click a slot.</p></aside>
+  </div>
+  <footer>Values in descriptions are for the highest rank available at your level. Beta data; Blizzard is still tuning. Icons from Wowhead; the colored strip under each icon marks its role (red interrupt, purple CC, orange stun, blue snare…).</footer>
+</div>
+
+<div class="dock" id="dock"><div class="dock-in">
+  <div class="dock-hd" id="dockHd"></div>
+  <div class="bars" id="bars"></div>
+</div></div>
+<div class="tip" id="tip" hidden></div>
+
+<script id="wowdata" type="application/json">__DATA__</script>
+<script id="wowicons" type="application/json">__ICONS__</script>
+<script>
+(()=>{
+const D=JSON.parse(document.getElementById('wowdata').textContent);
+let IC={};try{IC=JSON.parse(document.getElementById('wowicons').textContent)}catch(e){}
+const ICONS={has:k=>!!IC[k]};
+function icImg(icon){return icon&&IC[icon]?`<img class="ici" alt="" draggable="false" src="data:image/jpeg;base64,${IC[icon]}">`:''}
+const CLASSES=Object.keys(D.classes);
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+document.getElementById('pulled').textContent=D.meta.pulled;
+
+/* ---------- roles ---------- */
+const ROLE_LABEL={interrupt:'Interrupt',cc:'CC',stun:'Stun',snare:'Snare',taunt:'Taunt',purge:'Purge',dispel:'Dispel',defensive:'Defensive',mobility:'Mobility',burst:'Burst/CD',threat_drop:'Threat drop',debuff:'Debuff',stealth:'Stealth',res:'Res',pet:'Pet',heal:'Heal',buff:'Buff',damage:'Damage',utility:'Utility',passive:'Passive',racial:'Racial'};
+const SLOT_ROLES=[ // role-slot types for the shared template
+ ['interrupt','Interrupt'],['cc','Main CC'],['cc:2','Second CC'],['stun','Stun'],['stun:2','Second stun'],['snare','Snare'],
+ ['defensive','Defensive'],['defensive:2','Second defensive'],['mobility','Mobility'],['mobility:2','Second mobility'],
+ ['burst','Burst CD'],['burst:2','Second burst CD'],['threat_drop','Threat drop / escape'],['purge','Purge'],['dispel','Dispel'],
+ ['burst:3','Third burst CD'],['burst:4','Fourth burst CD'],['defensive:3','Third defensive'],
+ ['taunt','Taunt'],['heal','Heal'],['res','Res'],['stealth','Stealth'],['racial','Racial (DPS first)'],['mount','Mount'],['trinket1','Trinket 1'],['trinket2','Trinket 2']];
+const SHORT={interrupt:'Kick',cc:'CC 1','cc:2':'CC 2',stun:'Stun','stun:2':'Stun 2',snare:'Snare',defensive:'Def','defensive:2':'Def 2',mobility:'Move','mobility:2':'Move 2',burst:'Burst','burst:2':'Burst 2',threat_drop:'Drop',purge:'Purge',dispel:'Dispel',taunt:'Taunt',heal:'Heal',res:'Res',stealth:'Stealth',racial:'Racial','burst:3':'Burst 3','burst:4':'Burst 4','defensive:3':'Def 3',mount:'Mount',trinket1:'Trnk 1',trinket2:'Trnk 2'};
+const PSEUDO={'x:mount':{key:'x:mount',name:'Mount',icon:'ability_mount_whitetiger',desc:'Your mount (a macro or mount spell). Placeholder so the slot is reserved on every character.',roles:['mount'],pseudo:true,rank:1,maxRank:1},
+ 'x:trinket1':{key:'x:trinket1',name:'Trinket 1',icon:'inv_misc_gem_emerald_01',desc:'Top trinket slot (/use 13).',roles:['trinket1'],pseudo:true,rank:1,maxRank:1},
+ 'x:trinket2':{key:'x:trinket2',name:'Trinket 2',icon:'inv_misc_gem_ruby_01',desc:'Bottom trinket slot (/use 14).',roles:['trinket2'],pseudo:true,rank:1,maxRank:1}};
+const PREF={
+ interrupt:['Kick','Pummel','Counterspell','Silence','Earth Shock','Shield Bash','Feral Charge (Bear)','Feral Charge'],
+ cc:['Polymorph','Sap','Fear','Freezing Trap','Repentance','Hibernate','Blind','Scatter Shot','Gouge','Shackle Undead','Psychic Scream','Howl of Terror','Intimidating Shout','Death Coil','Confounding Flash','Entangling Roots','Banish','Mind Control','Turn Undead','Scare Beast','Polymorph: Cow'],
+ stun:['Kidney Shot','Cheap Shot','Hammer of Justice','Bash','Intimidation','Concussion Blow','Pounce','Inferno','Intercept','Holy Wrath','War Stomp'],
+ snare:['Hamstring','Wing Clip','Concussive Shot','Frost Shock','Frost Nova','Cone of Cold','Curse of Exhaustion','Piercing Howl','Frost Trap','Earthbind Totem','Chastise','Entangling Roots','Frostbolt'],
+ defensive:['Divine Shield','Ice Block','Deterrence','Evasion','Shield Wall','Barkskin','Power Word: Shield','Divine Protection','Last Stand','Ice Barrier','Will of the Forsaken','Stoneform','Will to Survive','Shatter Curse'],
+ mobility:['Blink','Sprint','Charge','Disengage','Dash','Aspect of the Cheetah','Ghost Wolf','Blessing of Freedom','Escape Artist','Intercept','Feral Charge','Strider Kick','Travel Form'],
+ threat_drop:['Feign Death','Vanish','Fade','Shadowmeld','Feint','Disengage','Cower','Blessing of Salvation'],
+ burst:['Bestial Wrath','Rapid Fire','Arcane Power','Combustion','Death Wish','Recklessness','Adrenaline Rush','Cold Blood','Berserk','Power Infusion','Blood Fury','Berserking',"Elune's Light"],
+};
+const RACIAL_ROLES={20549:['stun'],7744:['defensive','racial'],20580:['threat_drop','racial'],20589:['mobility','racial'],20594:['defensive','racial'],
+ 20554:['burst','racial'],20572:['burst','racial'],1259799:['burst','racial'],1259718:['defensive','racial'],1299026:['defensive','racial'],
+ 20577:['heal','racial'],1260270:['heal','racial'],20600:['utility','racial'],1259812:['burst','racial'],1259813:['burst','racial'],
+ 1259817:['burst','racial'],1259821:['burst','racial'],1259823:['burst','racial'],1259416:['mobility','racial'],1259686:['mobility','racial'],1259705:['utility','racial'],20552:['utility','racial'],2481:['utility','racial']};
+RACIAL_ROLES[20549].push('racial');
+const ROLE_PRIORITY=['interrupt','stun','cc','snare','purge','dispel','taunt','threat_drop','mobility','defensive','burst','heal','res','stealth','debuff','pet','damage','buff','utility','passive'];
+function mainRole(roles){for(const r of ROLE_PRIORITY) if(roles&&roles.includes(r)) return r; return 'utility'}
+function initials(name){const w=name.replace(/\(.*?\)/g,'').replace(/[^A-Za-z' :-]/g,'').split(/[\s:-]+/).filter(x=>x&&!/^(of|the|and)$/i.test(x));
+  return (w.length>1?w[0][0]+w[1][0]:(w[0]||'?').slice(0,2)).toUpperCase()}
+function icCls(icon){return icon&&ICONS.has(icon)?' ic':''}
+function tileHTML(item,extra=''){const r=item.passive?'passive':mainRole(item.roles);
+  return `<span class="tile ${item.passive?'passive':''} ${extra}${icCls(item.icon)}" style="--rc:var(--r-${r})">${icImg(item.icon)||esc(initials(item.name))}</span>`}
+
+/* ---------- index data ---------- */
+const TAL={}; // cls -> id -> talent (+tree)
+for(const c of CLASSES){TAL[c]={};D.classes[c].trees.forEach((t,ti)=>t.talents.forEach(x=>{TAL[c][x.id]={...x,treeIdx:ti,tree:t.name}}))}
+const TALENT_NAME={}; for(const c of CLASSES){TALENT_NAME[c]={};for(const a of D.classes[c].abilities) if(a.talent) TALENT_NAME[c][a.talent]=a.name}
+const RACES=D.racials.races;
+const DEFAULT_RACE={Hunter:'4',Warlock:'5',Paladin:'3',Shaman:'2',Druid:'4',Warrior:'1',Rogue:'1',Priest:'1',Mage:'1'};
+function racialIds(race,cls){const bc=D.racials.byClass&&D.racials.byClass[cls];if(bc&&bc[race])return bc[race];if(race==='7'&&D.racials.gnomeByClass[cls]) return D.racials.gnomeByClass[cls]; return D.racials.byRace[race]||[]}
+
+/* ---------- state ---------- */
+const SETTINGS_V=3;
+const ids=(b,from,n,p='b')=>Array.from({length:n},(_,i)=>`${p}${b}s${from+i}`);
+const KEYS=['1','2','3','4','5','6','7','8','9','0','-','='];
+const MODS=[['','No modifier'],['S','Shift'],['C','Ctrl'],['A','Alt'],['SA','Shift + Alt'],['SC','Shift + Ctrl'],['SCA','Shift + Ctrl + Alt']];
+const PROFILES={
+ tartarus:{name:'Razer Tartarus + Naga',layout:()=>[
+  {title:'Tartarus',sub:'Bar 1 · Bar 2',rows:[ids(1,1,4),ids(1,5,4),ids(1,9,4),ids(2,1,3)]},
+  {title:'Holding Shift',sub:'Bar 3 · Bar 2 back row',rows:[ids(3,1,4),ids(3,5,4),ids(3,9,4),ids(2,4,3)]},
+  {title:'Naga side buttons',sub:'Bar 4',rows:[ids(4,1,3),ids(4,4,3),ids(4,7,3),ids(4,10,3)]}]},
+ standard:{name:'Standard keyboard (1 to =, with modifiers)',layout:p=>Array.from({length:p.count||4},(_,i)=>({title:`Action Bar ${i+1}`,sub:MODS[i][1],rows:[ids(i+1,1,12,'k')]}))}};
+function defaultProfile(name){const binds={},roles={};
+  if(name==='tartarus'){const B={b1:KEYS,b2:['Z','X','C','S-Z','S-X','S-C'],b3:KEYS.map(k=>'S-'+k),b4:['F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12']};
+    for(const [bar,keys] of Object.entries(B))keys.forEach((k,j)=>binds[`${bar}s${j+1}`]=k);
+    Object.assign(roles,{b1s1:'burst',b1s2:'burst:2',b1s3:'burst:3',b1s4:'burst:4',b1s5:'interrupt',b1s6:'stun',b1s7:'cc',b1s8:'cc:2',
+     b2s1:'purge',b2s2:'mount',b2s3:'mobility',b2s6:'snare',
+     b4s1:'defensive',b4s2:'defensive:2',b4s3:'threat_drop',b4s4:'defensive:3',b4s5:'dispel',b4s6:'mobility:2',b4s7:'trinket1',b4s8:'racial',b4s9:'trinket2'});
+    return {binds,roles}}
+  MODS.forEach(([m],i)=>KEYS.forEach((k,j)=>binds[`k${i+1}s${j+1}`]=m?m+'-'+k:k));
+  ['interrupt','stun','cc','cc:2','snare','purge','dispel','mobility','threat_drop','defensive','defensive:2','racial'].forEach((r,j)=>roles[`k2s${j+1}`]=r);
+  ['burst','burst:2','burst:3','burst:4','trinket1','trinket2','mount','mobility:2','defensive:3'].forEach((r,j)=>roles[`k3s${j+1}`]=r);
+  return {binds,roles,count:4}}
+function defaultSettings(){return {v:SETTINGS_V,profile:'tartarus',profiles:{tartarus:defaultProfile('tartarus'),standard:defaultProfile('standard')}}}
+function mergeSettings(x){const d=defaultSettings();if(!x)return d;
+  if(x.v===2){d.profiles.tartarus={binds:x.binds||d.profiles.tartarus.binds,roles:x.roles||d.profiles.tartarus.roles};return d}
+  if(x.v!==SETTINGS_V)return d;
+  return {...d,...x,profiles:{tartarus:{...d.profiles.tartarus,...(x.profiles||{}).tartarus},standard:{...d.profiles.standard,...(x.profiles||{}).standard}}}}
+function P(){return S.settings.profiles[S.settings.profile]||S.settings.profiles.tartarus}
+function layout(){return (PROFILES[S.settings.profile]||PROFILES.tartarus).layout(P())}
+const S={cls:'Hunter',view:'book',builds:{},settings:defaultSettings(),sel:{},armed:null,selected:null,edit:false,filter:{q:'',roles:new Set(),show:'all'}};
+try{const u=JSON.parse(localStorage.getItem('fsb-ui')||'{}');if(u.cls&&D.classes[u.cls])S.cls=u.cls;if(u.sel)S.sel=u.sel;if(u.view)S.view=u.view;S.missing=!!u.missing}catch(e){}
+function saveUI(){try{localStorage.setItem('fsb-ui',JSON.stringify({cls:S.cls,sel:S.sel,view:S.view,missing:!!S.missing}))}catch(e){}}
+const uid=()=>Math.random().toString(36).slice(2,10);
+function newBuild(cls,name){return {id:uid(),name:name||`${RACES[DEFAULT_RACE[cls]]} ${cls}`,cls,race:DEFAULT_RACE[cls],level:60,talents:{},bars:{},_transient:true}}
+function build(){let b=S.builds[S.sel[S.cls]];
+  if(!b||b.cls!==S.cls){b=Object.values(S.builds).filter(x=>x.cls===S.cls).sort((a,b)=>(a.name>b.name?1:-1))[0];
+    if(!b){b=newBuild(S.cls);S.builds[b.id]=b} S.sel[S.cls]=b.id}
+  return b}
+
+/* ---------- persistence ---------- */
+let db=null, mode='connecting'; const timers={}; const pending=new Set();
+function chip(state,text){const c=$('#saveChip');c.className='save-chip '+state;c.lastChild.textContent=text}
+function persistLocal(){try{localStorage.setItem('fsb-data',JSON.stringify({builds:Object.fromEntries(Object.entries(S.builds).filter(([k,v])=>!v._transient)),settings:S.settings}))}catch(e){}}
+function clean(o){const c={...o};delete c._transient;return JSON.parse(JSON.stringify(c))}
+function queueWrite(path,getData){
+  if(mode!=='db'){persistLocal();return}
+  pending.add(path);chip('busy','Saving…');clearTimeout(timers[path]);
+  timers[path]=setTimeout(async()=>{const data=getData();
+    try{ if(data===null) await db.doc(path).delete(); else await db.doc(path).set(data); chip('ok','Saved with the page')}
+    catch(e){ if(e&&e.code==='invalid_argument'){mode='local';chip('local','Read-only here · saving in this browser');persistLocal()} else chip('local','Save failed: '+(e&&e.code||'error'))}
+    finally{pending.delete(path)}},600)}
+function saveBuild(b){delete b._transient;queueWrite('builds/'+b.id,()=>S.builds[b.id]?clean(S.builds[b.id]):null)}
+function deleteBuild(b){delete S.builds[b.id];if(!b._transient) queueWrite('builds/'+b.id,()=>null)}
+function saveSettings(){queueWrite('app/settings',()=>clean(S.settings))}
+function ioMsg(t){const m=$('#ioMsg');if(m){m.textContent=t;clearTimeout(ioMsg.t);ioMsg.t=setTimeout(()=>m.textContent='',6000)}}
+async function exportData(){const builds=Object.fromEntries(Object.entries(S.builds).filter(([k,v])=>!v._transient).map(([k,v])=>[k,clean(v)]));
+  const json=JSON.stringify({app:'forever-spellbook',version:1,exported:new Date().toISOString(),builds,settings:clean(S.settings)},null,1);
+  const filename='forever-spellbook-'+new Date().toISOString().slice(0,10)+'.json';
+  try{if(window.claude&&claude.use){const dl=await claude.use('downloads');if(dl){await dl.save({filename,data:json});ioMsg(`Exported ${Object.keys(builds).length} builds`);return}}}catch(e){if(e&&e.code&&e.code!=='not_granted'){ioMsg('Export cancelled');return}}
+  try{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([json],{type:'application/json'}));a.download=filename;document.body.appendChild(a);a.click();a.remove();ioMsg(`Exported ${Object.keys(builds).length} builds`)}
+  catch(e){try{await navigator.clipboard.writeText(json);ioMsg('Copied export to clipboard')}catch(_){ioMsg('Export not available here')}}}
+function importData(text){let d;try{d=JSON.parse(text)}catch(e){ioMsg('That file is not valid JSON');return}
+  if(!d||d.app!=='forever-spellbook'||!d.builds){ioMsg('Not a Forever Spellbook export');return}
+  let n=0;for(const [id,b] of Object.entries(d.builds)){if(!b||!D.classes[b.cls])continue;S.builds[id]={...b,id,talents:b.talents||{},bars:b.bars||{}};delete S.builds[id]._transient;saveBuild(S.builds[id]);n++}
+  for(const [k,v] of Object.entries(S.builds))if(v._transient&&Object.values(S.builds).some(x=>x.cls===v.cls&&!x._transient))delete S.builds[k];
+  if(d.settings){S.settings=mergeSettings(d.settings);saveSettings()}
+  if(mode!=='db')persistLocal();render();ioMsg(`Imported ${n} build${n===1?'':'s'}`)}
+function loadLocal(){try{const d=JSON.parse(localStorage.getItem('fsb-data')||'null');if(d){Object.assign(S.builds,d.builds||{});if(d.settings)S.settings=mergeSettings(d.settings)}}catch(e){}}
+(async()=>{
+  let ok=false;
+  try{ if(window.claude&&claude.use){ db=await claude.use('db'); ok=!!db } }catch(e){}
+  if(!ok){mode='local';loadLocal();chip('local','Saving in this browser only');render();return}
+  mode='db';chip('ok','Saved with the page');
+  db.collection('builds').onSnapshot(snap=>{
+    for(const ch of snap.docChanges()){const id=ch.doc.id;if(pending.has('builds/'+id)) continue;
+      if(ch.type==='removed') delete S.builds[id]; else S.builds[id]={...ch.doc.data(),id}}
+    for(const [k,v] of Object.entries(S.builds)) if(v._transient && Object.values(S.builds).some(x=>x.cls===v.cls&&!x._transient)) delete S.builds[k];
+    render()},e=>{chip('local','Sync stopped ('+e.code+')')});
+  db.doc('app/settings').onSnapshot(s=>{if(pending.has('app/settings'))return;if(s.exists){S.settings=mergeSettings(s.data());render()}},()=>{});
+})();
+setTimeout(()=>{if(mode==='connecting'){mode='local';loadLocal();chip('local','Saving in this browser only');render()}},11000);
+
+/* ---------- talent logic ---------- */
+function treePts(b,ti,belowRow=99){let n=0;for(const [id,r] of Object.entries(b.talents||{})){const t=TAL[b.cls][id];if(t&&t.treeIdx===ti&&t.row<belowRow)n+=r}return n}
+function spent(b){return Object.values(b.talents||{}).reduce((a,c)=>a+c,0)}
+function budget(b){return Math.max(0,b.level-9)}
+function reqOk(b,t){return (t.req||[]).every(q=>{const id=Array.isArray(q)?q[0]:q.id, n=Array.isArray(q)?q[1]:(q.qty||1);return (b.talents[id]||0)>=Math.min(n,TAL[b.cls][id]?.max||n)})}
+function canAdd(b,t){const cur=b.talents[t.id]||0;return cur<t.max && spent(b)<budget(b) && treePts(b,t.treeIdx,t.row)>=t.row*5 && reqOk(b,t)}
+function valid(b){for(const [id,r] of Object.entries(b.talents)){const t=TAL[b.cls][id];if(!t)continue;if(r>0&&(treePts(b,t.treeIdx,t.row)<t.row*5||!reqOk(b,t)))return false}return true}
+function canRemove(b,t){const cur=b.talents[t.id]||0;if(!cur)return false;b.talents[t.id]=cur-1;const ok=valid(b);b.talents[t.id]=cur;return ok}
+function addPt(b,t){if(!canAdd(b,t))return false;b.talents[t.id]=(b.talents[t.id]||0)+1;return true}
+function rmPt(b,t){if(!canRemove(b,t))return false;b.talents[t.id]--;if(!b.talents[t.id])delete b.talents[t.id];return true}
+function fillTree(b,ti){const tr=D.classes[b.cls].trees[ti];
+  const order=[...tr.talents].sort((a,c)=>a.row-c.row||(!!c.active-!!a.active)||a.col-c.col);
+  let changed=true;while(changed){changed=false;for(const t of order){while(addPt(b,TAL[b.cls][t.id]))changed=true}}}
+
+/* ---------- spellbook ---------- */
+function racialItems(b){return racialIds(b.race,b.cls).map(id=>{const s=D.racials.spells[id];if(!s)return null;const passive=!s.ct;
+  return {key:'r:'+id,name:s.n,icon:s.i,desc:s.d,cd:s.cd,cast:s.ct,passive,spellId:+id,roles:passive?['passive']:(RACIAL_ROLES[id]||['racial']),isRacial:true,rank:1,maxRank:1,learn:1}}).filter(Boolean)}
+function itemFromAbility(a,b){const lv=b.level;const have=a.levels.filter(l=>l<=lv).length;let known=false,why='',rank=0;
+  if(a.talent){const t=TAL[b.cls][a.talent];const tr=b.talents[a.talent]||0;
+    known=tr>0&&lv>=(t?.level||10);rank=Math.max(have,1);why=t?`Talent: ${t.tree} row ${t.row+1}`:'Talent';
+    if(!tr) why+=' (not taken)'}
+  else{known=have>0;rank=have;why=known?'':`Learned at ${a.learn}`}
+  return {...a,key:a.name,known,rank,maxRank:a.levels.length||1,why}}
+function allItems(b){return D.classes[b.cls].abilities.map(a=>itemFromAbility(a,b))}
+function knownMap(b){const m={};for(const it of allItems(b)) if(it.known)m[it.key]=it;for(const r of racialItems(b))m[r.key]=r;Object.assign(m,PSEUDO);return m}
+function resolveRole(spec,km,b){const [base,nStr]=spec.split(':');const n=(+nStr||1)-1;
+  let c=Object.values(km).filter(it=>!it.passive&&!it.petTraining&&it.roles.includes(base));
+  if(base==='racial'){c=Object.values(km).filter(it=>it.isRacial&&!it.passive);c.sort((x,y)=>(y.roles.includes('burst')-x.roles.includes('burst')));return c[n]||null}
+  if(base==='mount'||base.startsWith('trinket')) return PSEUDO['x:'+base]||null;
+  const pref=PREF[base]||[];
+  c.sort((x,y)=>{const a=pref.indexOf(x.name),bb=pref.indexOf(y.name);return (a<0?999:a)-(bb<0?999:bb)});
+  return c[n]||null}
+
+/* ---------- rendering ---------- */
+function render(){
+  const b=build();const col=D.classes[S.cls].color;
+  document.documentElement.style.setProperty('--cls',col);
+  // class tabs
+  $('#classTabs').innerHTML=CLASSES.map(c=>`<button role="tab" aria-selected="${c===S.cls}" data-cls="${c}" style="--c:${D.classes[c].color}">${c}</button>`).join('');
+  renderCharbar(b);
+  $('#views').innerHTML=[['book','Spellbook'],['talents','Talents'],['all','All abilities']].map(([k,l])=>`<button role="tab" aria-selected="${S.view===k}" data-view="${k}">${l}${k==='talents'?` <span style="opacity:.7">${spent(b)}/${budget(b)}</span>`:''}</button>`).join('');
+  if(S.view==='talents') renderTalents(b); else if(S.view==='all') renderAll(b); else renderBook(b);
+  renderBars(b);
+  if(S.selected) showDetail(S.selected,b);
+  saveUI();
+}
+function renderCharbar(b){
+  const builds=Object.values(S.builds).filter(x=>x.cls===S.cls).sort((a,c)=>a.name>c.name?1:-1);
+  const sp=spent(b),bu=budget(b);
+  $('#charbar').innerHTML=`
+   <label class="field">Character / build<select id="selBuild">${builds.map(x=>`<option value="${x.id}" ${x.id===b.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></label>
+   <label class="field">Name<input type="text" id="bName" value="${esc(b.name)}" size="16"></label>
+   <label class="field">Race<select id="bRace">${Object.entries(RACES).map(([id,n])=>`<option value="${id}" ${id===b.race?'selected':''}>${n} (${D.racials.faction[id]==='A'?'Alliance':'Horde'})</option>`).join('')}</select></label>
+   <div class="field">Level<div class="lvl"><button class="btn small lvbtn" id="lvlDn" title="Level down (Shift: −5)" aria-label="Level down">−</button><input type="range" min="1" max="60" id="bLvl" value="${b.level}" aria-label="Level slider"><button class="btn small lvbtn" id="lvlUp" title="Level up (Shift: +5)" aria-label="Level up">+</button><input type="number" min="1" max="60" id="lvlNum" value="${b.level}" aria-label="Level"></div></div>
+   <div class="field">Talent points<span class="pts ${sp>bu?'over':''}">${sp} / ${bu}${sp>bu?' · over budget':''}</span></div>
+   <span class="spacer"></span>
+   <button class="btn" id="newB">New</button><button class="btn" id="dupB">Duplicate</button><button class="btn danger" id="delB">Delete</button>`;
+}
+function spellBtn(it,b,opts={}){const miss=opts.bars&&S.missing&&isMissing(it,opts.bars);
+  const draggable=!it.passive&&(it.known!==false);
+  const meta=[];if(it.maxRank>1)meta.push(`Rank ${it.rank}/${it.maxRank}`);if(it.cast)meta.push(it.cast);if(it.cd)meta.push(it.cd.replace(' cooldown',' cd'));
+  if(opts.all&&!it.known) meta.unshift(it.why);
+  const tags=[];if(it.talent)tags.push('talent');if(it.racial)tags.push('race');if(it.petTraining)tags.push('pet');if(it.passive)tags.push('passive');if((it.changes||[]).includes('introduced'))tags.push('new');
+  return `<button class="spell ${draggable?'':'nodrag'} ${opts.all&&!it.known?'dim':''} ${S.armed===it.key?'armed':''} ${S.selected===it.key?'sel':''} ${miss?'missing':''}" data-key="${esc(it.key)}" draggable="false">
+    ${tileHTML(it,opts.all&&!it.known?'locked':'')}<span class="txt"><div class="nm">${esc(it.name)}${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div><div class="meta">${esc(meta.join(' · '))||'&nbsp;'}</div></span></button>`}
+function renderBook(b){
+  const km=knownMap(b);const items=Object.values(km);
+  const racial=items.filter(i=>i.isRacial||i.racial);const gear=items.filter(i=>i.pseudo);
+  const pet=items.filter(i=>i.petTraining);
+  const talent=items.filter(i=>i.talent&&!i.passive);
+  const base=items.filter(i=>!i.pseudo&&!i.isRacial&&!i.racial&&!i.petTraining&&!i.talent&&!i.passive);
+  const passive=items.filter(i=>i.passive&&!i.isRacial&&!i.petTraining);
+  const bars=onBarsSet(b,km);const nMiss=items.filter(i=>isMissing(i,bars)).length;
+  const g=(t,arr,note='')=>arr.length?`<section class="group"><h3>${t} <span>${arr.length}${note?' · '+note:''}</span></h3><div class="grid">${arr.map(i=>spellBtn(i,b,{bars})).join('')}</div></section>`:'';
+  $('#main').innerHTML=
+    `<div class="bookbar"><p class="hint" style="margin:0">What a level ${b.level} ${esc(RACES[b.race])} ${S.cls} with this talent build has in the spellbook. Drag onto a bar, or click then click a slot.</p>
+     <button class="btn missbtn" id="missBtn" aria-pressed="${!!S.missing}">✦ Missing from bars <span class="cnt">${nMiss}</span></button></div>`+
+    g(S.cls,base)+g('From talents',talent)+g('General / racial',racial,b.cls==='Priest'?'priest race spells vary by race; Wowhead does not say which race gets which, so all are shown':'')+g('Pet training',pet)+g('Mount & trinkets',gear)+g('Passive',passive)+
+    (talent.length?'':`<p class="empty">No talent abilities yet. Open <b>Talents</b> to spend points.</p>`);
+}
+function renderAll(b){
+  const f=S.filter;let items=allItems(b);
+  const roles=[...new Set(items.flatMap(i=>i.roles))].sort((a,c)=>ROLE_PRIORITY.indexOf(a)-ROLE_PRIORITY.indexOf(c));
+  const q=f.q.toLowerCase();const barsAll=onBarsSet(b,knownMap(b));
+  items=items.filter(i=>(!q||i.name.toLowerCase().includes(q)||(i.desc||'').toLowerCase().includes(q))&&(!f.roles.size||i.roles.some(r=>f.roles.has(r)))&&(f.show==='all'||(f.show==='missing'?isMissing(i,barsAll):f.show==='known'?i.known:!i.known)));
+  items.sort((a,c)=>(a.talent?(TAL[b.cls][a.talent]?.level||10):a.learn)-(c.talent?(TAL[b.cls][c.talent]?.level||10):c.learn)||a.name.localeCompare(c.name));
+  $('#main').innerHTML=`<div class="filters"><input type="search" id="fq" placeholder="Search names and text" value="${esc(f.q)}">
+   <select id="fshow" class="btn"><option value="all">All</option><option value="known" ${f.show==='known'?'selected':''}>Known at ${b.level}</option><option value="unknown" ${f.show==='unknown'?'selected':''}>Not yet known</option><option value="missing" ${f.show==='missing'?'selected':''}>Known but not on bars</option></select>
+   ${roles.map(r=>`<button class="chip" data-role="${r}" aria-pressed="${f.roles.has(r)}" style="--rc:var(--r-${r})"><i></i>${ROLE_LABEL[r]||r}</button>`).join('')}</div>
+   <div class="grid">${items.map(i=>spellBtn(i,b,{all:true,bars:barsAll})).join('')||'<p class="empty">Nothing matches.</p>'}</div>`;
+  const fq=$('#fq');fq.oninput=()=>{f.q=fq.value;const p=fq.selectionStart;renderAll(b);const n=$('#fq');n.focus();n.setSelectionRange(p,p)};
+}
+function arrowsSVG(tr,b){const P=54,S=44;let h='';
+  for(const t of tr.talents)for(const q of (t.req||[])){const sid=Array.isArray(q)?q[0]:q.id,qty=Array.isArray(q)?q[1]:(q.qty||1);const src=TAL[b.cls][sid];if(!src)continue;
+    const on=(b.talents[sid]||0)>=Math.min(qty,src.max)?'on':'off';const sx=src.col*P,sy=src.row*P,dx=t.col*P,dy=t.row*P;let d,ah;
+    if(src.col===t.col){const x=sx+S/2;d=`M${x},${sy+S+1} L${x},${dy-6}`;ah=`M${x-5},${dy-7} L${x+5},${dy-7} L${x},${dy-1}Z`}
+    else if(src.row===t.row){const y=sy+S/2,dir=t.col>src.col?1:-1,x1=dir>0?sx+S+1:sx-1,x2=dir>0?dx-6:dx+S+6;d=`M${x1},${y} L${x2},${y}`;const xe=dir>0?dx-1:dx+S+1;ah=`M${x2},${y-5} L${x2},${y+5} L${xe},${y}Z`}
+    else{const y=sy+S/2,dir=t.col>src.col?1:-1,x1=dir>0?sx+S+1:sx-1,x=dx+S/2;d=`M${x1},${y} L${x},${y} L${x},${dy-6}`;ah=`M${x-5},${dy-7} L${x+5},${dy-7} L${x},${dy-1}Z`}
+    h+=`<path class="${on}" d="${d}"/><path class="ah-${on}" d="${ah}"/>`}
+  return h?`<svg class="arrows" viewBox="0 0 206 374" aria-hidden="true">${h}</svg>`:''}
+function rankText(t,i){return t.ranks?t.ranks[Math.max(1,Math.min(t.max,i))-1]:t.desc}
+function renderTalents(b){
+  const trees=D.classes[b.cls].trees;
+  $('#main').innerHTML=`<div class="talsearch"><input type="search" id="talQ" placeholder="Search talents: critical, stun, range, Fire Blast…" value="${esc(S.talQ||'')}" autocomplete="off"><span id="talCount" class="hint"></span></div>${tagChips(b.cls,b)}<div class="trees">${trees.map((tr,ti)=>{
+    const pts=treePts(b,ti);
+    const cells=tr.talents.map(t0=>{const t=TAL[b.cls][t0.id];const r=b.talents[t.id]||0;const can=canAdd(b,t);
+      const st=r>=t.max?'full':(can?'can':(r>0?'':'off'));const it={name:t.name,roles:t.active?(D.classes[b.cls].abilities.find(a=>a.talent===t.id)?.roles||['utility']):['passive'],passive:false};
+      return `<button class="tal ${st} ${t.active?'act':''}" style="grid-row:${t.row+1};grid-column:${t.col+1}" data-tal="${t.id}" aria-label="${esc(t.name)} ${r}/${t.max}">
+        ${t.active?'<span class="star">★</span>':''}<span class="tile${icCls(t.icon)}" style="--rc:var(--r-${t.active?mainRole(it.roles):'passive'})">${icImg(t.icon)||esc(initials(t.name))}</span><span class="rk">${r}/${t.max}</span></button>`}).join('');
+    return `<div class="tree"><div class="th"><b>${esc(tr.name)}</b><span class="role">${tr.role}</span><span class="sp">${pts}</span>
+      <button class="btn small" data-fill="${ti}" title="Greedily fill this tree (active talents first)">Fill</button><button class="btn small" data-reset="${ti}">Reset</button></div>
+      <div class="tgrid">${arrowsSVG(tr,b)}${cells}</div></div>`}).join('')}</div>
+    <p class="hint">Click to add a point, right-click (or shift-click) to remove. Green outline = available, gold = maxed, ★ = grants an ability that will appear in your spellbook. Each row needs 5 points in that tree.</p>`;
+  applyTalSearch(b);
+}
+function slotItem(id,b,km){const role=P().roles[id];const key=b.bars[id];let it=key?km[key]:null;let auto=false;if(!it&&role){it=resolveRole(role,km,b);auto=!!it}return {it,auto,key,role}}
+function onBarsSet(b,km){const set=new Set();for(const p of layout())for(const r of p.rows)for(const id of r){const {it}=slotItem(id,b,km);if(it)set.add(it.key)}return set}
+function isMissing(it,bars){return it.known!==false&&!it.passive&&!it.petTraining&&!it.pseudo&&!bars.has(it.key)}
+function slotHTML(id,b,km){const st=P();const role=st.roles[id];const kb=st.binds[id]||'';
+  let key=b.bars[id];let it=key?km[key]:null;let auto=false;
+  if(!it&&role){it=resolveRole(role,km,b);auto=!!it}
+  const roleLbl=role?(SLOT_ROLES.find(r=>r[0]===role)?.[1]||role):'';const roleShort=role?(SHORT[role]||roleLbl):'';
+  const rc=role?`--rc:var(--r-${role.split(':')[0]})`:'';
+  return `<div class="slot ${role?'role':''} ${auto?'auto':''}" data-slot="${id}" style="${rc}" title="${esc(roleLbl?roleLbl+' slot':'')}">
+    ${kb?`<span class="kb">${esc(kb)}</span>`:''}
+    ${it?`<span class="st" draggable="false" data-from="${id}" data-key="${esc(it.key)}">${tileHTML(it)}</span>`:(role?`<span class="rl pin">${esc(roleShort)}</span>`:'')}
+    ${key&&!S.edit?`<button class="x" data-clear="${id}" title="${role?'Back to auto':'Remove'}">${role?'↺':'×'}</button>`:''}
+    ${key&&b.bars[id]&&!km[key]?`<span class="rl">${esc(key)}?</span>`:''}</div>`}
+function renderBars(b){
+  const km=knownMap(b);
+  $('#dockHd').innerHTML=`<b>${esc(b.name)}</b>
+    <select id="barProfile" class="btn small" title="Bar layout">${Object.entries(PROFILES).map(([k,v])=>`<option value="${k}" ${S.settings.profile===k?'selected':''}>${v.name}</option>`).join('')}</select>
+    ${S.settings.profile==='standard'?`<select id="barCount" class="btn small" title="Number of action bars">${[1,2,3,4,5,6,7].map(n=>`<option value="${n}" ${(P().count||4)===n?'selected':''}>${n} bar${n>1?'s':''}</option>`).join('')}</select>`:''}
+    <button class="btn small" id="dockToggle">${S.collapsed?'Show bars':'Hide bars'}</button>
+    <button class="btn small" id="editBars" aria-pressed="${S.edit}">${S.edit?'Done editing layout':'Edit keybinds & role slots'}</button>
+    <button class="btn small" id="clearBars">Clear this build's bars</button>
+    <button class="btn small" id="resetLayout" title="Restore this layout's default keybinds and role slots">Reset layout</button>
+    ${S.armed?`<span class="armedmsg">Placing ${esc(km[S.armed]?.name||S.armed)} · click a slot (Esc to cancel)</span>`:''}
+    <span class="spacer"></span><span class="trash" id="trash">Drop here to remove</span>`;
+  $('#bars').innerHTML=layout().map(p=>`<section class="pad ${S.edit?'edit':''}"><h4>${p.title} <span>${p.sub}</span></h4>
+    ${p.rows.map(r=>`<div class="prow">${r.map(id=>slotHTML(id,b,km)).join('')}</div>`).join('')}</section>`).join('');
+  $('#bars').hidden=!!S.collapsed;
+  fitDock();
+}
+function fitDock(){const d=$('#dock'),w=document.querySelector('.wrap');if(!d||!w)return;const fixed=getComputedStyle(d).position==='fixed';w.style.paddingBottom=fixed?(d.offsetHeight+24)+'px':''}
+addEventListener('resize',()=>fitDock());
+const CHANGE_TEXT={introduced:'New in WoW Forever (not in Classic)',changedLevels:'Trained at different levels than in Classic',nowTrainable:'Now trained baseline (was a talent or quest in Classic)'};
+function fmtList(arr){return (arr||[]).map(esc).join(', ')}
+function findItem(key,b){if(PSEUDO[key])return PSEUDO[key];if(key.startsWith('r:')){const r=racialItems(b).find(x=>x.key===key);if(r)return r;const id=key.slice(2),s=D.racials.spells[id];return s?{key,name:s.n,icon:s.i,desc:s.d,cd:s.cd,cast:s.ct,spellId:+id,roles:['racial'],isRacial:true}:null}
+  return allItems(b).find(x=>x.key===key)}
+function showDetail(key,b){const it=findItem(key,b);if(!it)return;
+  const rows=[['Rank',it.maxRank>1?`${it.rank||0} of ${it.maxRank}`:''],['Cost',it.cost],['Range',it.range],['Cast',it.cast],['Cooldown',it.cd],['Requires',fmtList(it.reqs)],
+   ['Learned',it.isRacial?'Racial':it.talent?it.why:(it.levels||[]).join(', ')],['Roles',(it.roles||[]).map(r=>ROLE_LABEL[r]||r).join(', ')]].filter(r=>r[1]);
+  $('#detail').innerHTML=`<div class="hd">${tileHTML(it)}<div><h2>${esc(it.name)}</h2><div class="sub">${it.known===false?'Not in spellbook yet':'In spellbook'}${it.racial?' · race-specific':''}</div></div></div>
+   <dl class="kv">${rows.map(r=>`<dt>${r[0]}</dt><dd>${esc(r[1])}</dd>`).join('')}</dl>
+   <p class="desc">${esc(it.desc||'')}</p>
+   ${it.changes&&it.changes.length?`<ul class="changes">${it.changes.map(c=>`<li>${esc(CHANGE_TEXT[c]||c)}</li>`).join('')}</ul>`:''}
+   ${it.spellId?`<p style="margin-top:10px"><a href="https://www.wowhead.com/forever/spell=${it.spellId}" target="_blank" rel="noopener">Open on Wowhead ↗</a></p>`:''}`;
+}
+const TAL_TAGS={
+ Hunter:[['Melee','\\bmelee\\b|raptor strike|mongoose|wing clip|counterattack|off hand'],['Ranged','\\branged\\b|\\bshots?\\b'],['Traps','\\btraps?\\b'],
+  ['Crit','critical|\\bcrit\\b'],['Hit','chance to hit|\\bhit chance'],['Pet','\\bpets?\\b'],['Hawk','\\bhawks?\\b'],['Parry','\\bparry'],['Dodge','\\bdodge'],
+  ['Aspects','\\baspects?\\b'],['Stings','\\bstings?\\b'],['Control','\\bstun|immobiliz|\\bdaze|incapacitat|\\bslow|scatter'],['Mana','\\bmana\\b'],['Cooldowns','cooldown']],
+ Warrior:[["Rage", "\\brage\\b"], ["Crit", "critical|\\bcrit\\b"], ["Shield / Block", "\\bshield|\\bblock"], ["Stances", "stance"], ["Bleeds", "\\brend\\b|deep wound|\\bbleed"], ["Two-Hand / Dual Wield", "two-hand|dual wield|off hand|off-hand"], ["Weapons", "\\baxe|\\bsword|\\bmace|polearm|weapon"], ["Control", "\\bstun|\\bdaze|\\bslow|\\bfear|disarm|immobiliz|hamstring|intimidat"], ["Charge", "\\bcharge|intercept"], ["Overpower", "overpower"], ["Threat", "threat|taunt"], ["Health", "\\bhealth"], ["Armor", "\\barmor"], ["Cooldowns", "cooldown"]],
+ Paladin:[["Seals", "\\bseals?\\b"], ["Judgement", "judgement"], ["Holy damage", "holy damage"], ["Healing", "\\bheal"], ["Shield / Block", "\\bshield|\\bblock"], ["Mana", "\\bmana\\b"], ["Crit", "critical|\\bcrit\\b"], ["Intellect", "intellect|spell damage|spell power"], ["Control", "\\bstun|hammer of justice|repentance|incapacitat|\\bfear|\\bslow|\\bdaze"], ["Threat", "threat|taunt"], ["Cooldowns", "cooldown"]],
+ Rogue:[["Combo points", "combo point"], ["Energy", "\\benergy"], ["Stealth", "stealth|vanish"], ["Poisons", "poison"], ["Bleeds", "\\bbleed|rupture|garrote|hemorrhage"], ["Finishers", "finishing move"], ["Crit", "critical|\\bcrit\\b"], ["Daggers", "dagger"], ["Weapons", "dagger|\\bsword|\\bmace|\\baxe|\\bfist|off hand|dual wield"], ["Control", "\\bstun|gouge|\\bsap\\b|\\bblind|kidney|cheap shot|\\bdaze|incapacitat|\\bslow"], ["Dodge / Parry", "\\bdodge|evasion|\\bparry"], ["Cooldowns", "cooldown"]],
+ Priest:[["Shadow", "shadow"], ["Holy", "\\bholy"], ["Healing", "\\bheal"], ["Shields / Absorbs", "\\bshield|absorb"], ["Over time", "over \\d+ sec|periodic"], ["Mind Blast / Flay", "mind blast|mind flay"], ["Smite / Holy Fire", "\\bsmite|holy fire"], ["Mana", "\\bmana\\b"], ["Spirit", "\\bspirit"], ["Crit", "critical|\\bcrit\\b"], ["Control", "\\bfear|silence|psychic|\\bstun|horror|shackle|\\bslow|immobiliz"], ["Pushback", "casting time|interrupt"], ["Party", "\\bparty|\\braid"], ["Threat", "threat"], ["Cooldowns", "cooldown"]],
+ Shaman:[["Totems", "totem"], ["Shocks", "\\bshock"], ["Lightning", "lightning"], ["Fire", "\\bfire|flame|magma|lava"], ["Frost", "frost"], ["Nature", "nature"], ["Healing", "\\bheal"], ["Weapon / Melee", "\\bweapon|windfury|flametongue|rockbiter|frostbrand|\\bmelee|stormstrike"], ["Shields", "\\bshield"], ["Mana", "\\bmana\\b"], ["Crit", "critical|\\bcrit\\b"], ["Pushback", "casting time|interrupt"], ["Cooldowns", "cooldown"]],
+ Mage:[["Fire", "\\bfire|flame|pyroblast|scorch|ignite|combustion"], ["Frost", "frost|\\bice\\b|cone of cold|blizzard"], ["Arcane", "arcane"], ["Crit", "critical|\\bcrit\\b"], ["Hit", "chance to hit|\\bhit chance"], ["Mana", "\\bmana\\b"], ["Frozen", "frozen|freeze|frost nova|chill"], ["Control", "\\bslow|\\bdaze|\\bstun|polymorph|counterspell|immobiliz|silence"], ["Arcane Missiles", "missile"], ["Armor / Wards", "\\barmor|\\bward|barrier|mana shield"], ["Pushback", "casting time|interrupt"], ["Range", "\\brange|radius"], ["Cooldowns", "cooldown"]],
+ Warlock:[["Curses", "\\bcurse|\\bbane"], ["Damage over time", "over \\d+ sec|periodic|corruption|immolate|siphon"], ["Shadow", "shadow"], ["Fire", "\\bfire|immolate|incinerate|searing|conflagrate"], ["Demons", "\\bdemon|\\bpet\\b|\\bimp\\b|voidwalker|succubus|incubus|felhunter|felguard"], ["Soul Shards", "soul shard"], ["Drain / Life", "\\bdrain|siphon|life tap|\\blife\\b"], ["Health", "\\bhealth"], ["Mana", "\\bmana\\b"], ["Crit", "critical|\\bcrit\\b"], ["Control", "\\bfear|\\bhowl|death coil|banish|seduc|\\bstun|\\bslow|exhaust"], ["Range", "\\brange"], ["Pushback", "casting time|interrupt"], ["Threat", "threat"], ["Cooldowns", "cooldown"]],
+ Druid:[["Cat", "\\bcat\\b"], ["Bear", "\\bbear\\b"], ["Moonkin", "moonkin"], ["Forms / Shifting", "\\bform\\b|shapeshift"], ["Energy", "\\benergy"], ["Rage", "\\brage\\b"], ["Combo points", "combo point"], ["Healing", "\\bheal"], ["Heal over time", "rejuvenation|regrowth|lifebloom|wild growth|tranquility"], ["Nature", "nature|wrath|moonfire|insect swarm"], ["Arcane", "arcane|starfire|moonfire"], ["Crit", "critical|\\bcrit\\b"], ["Mana", "\\bmana\\b"], ["Control", "\\broot|entangl|\\bbash|\\bstun|hibernate|cyclone|\\bdaze|\\bslow|immobiliz"], ["Armor", "\\barmor"], ["Party", "\\bparty|\\braid"], ["Cooldowns", "cooldown"]]};
+function talTerms(){return (S.talQ||'').toLowerCase().split(/\s+/).filter(Boolean)}
+function activeTags(cls){return (TAL_TAGS[cls]||[]).filter(([l])=>(S.talTags||[]).includes(l)).map(([l,re])=>new RegExp(re,'i'))}
+function talText(t,b){return (t.name+' '+(t.ranks?t.ranks.join(' '):(t.desc||''))+' '+(TALENT_NAME[b.cls][t.id]||'')).toLowerCase()}
+function hl(text){const s=esc(text||'');const parts=talTerms().map(x=>esc(x).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).concat(activeTags(S.cls).map(r=>r.source));
+  if(!parts.length)return s;const re=new RegExp('('+parts.join('|')+')','gi');return s.replace(re,'<mark>$1</mark>')}
+function tagChips(cls,b){const tags=TAL_TAGS[cls];if(!tags)return '';const all=Object.values(TAL[cls]);
+  return `<div class="tagrow">${tags.map(([l,re])=>{const r=new RegExp(re,'i');const n=all.filter(t=>r.test(talText(t,b))).length;
+    return `<button class="chip ttag" data-ttag="${esc(l)}" aria-pressed="${(S.talTags||[]).includes(l)}">${esc(l)} <span class="tn">${n}</span></button>`}).join('')}
+    <button class="chip ttag-clear" id="ttagClear" ${(S.talTags||[]).length?'':'hidden'}>Clear tags</button></div>`}
+function applyTalSearch(b){const terms=talTerms();const tags=activeTags(b.cls);const on=terms.length||tags.length;let n=0;const per={};
+  document.querySelectorAll('.tal').forEach(el=>{const t=TAL[b.cls][el.dataset.tal];const txt=talText(t,b);const m=on&&terms.every(x=>txt.includes(x))&&tags.every(r=>r.test(txt));
+    el.classList.toggle('hit',!!m);el.classList.toggle('miss',!!on&&!m);if(m){n++;per[t.tree]=(per[t.tree]||0)+1}});
+  document.querySelectorAll('[data-ttag]').forEach(el=>el.setAttribute('aria-pressed',(S.talTags||[]).includes(el.dataset.ttag)));
+  const cl=$('#ttagClear');if(cl)cl.hidden=!(S.talTags||[]).length;
+  const c=$('#talCount');if(c)c.textContent=on?(n?`${n} match${n>1?'es':''} · `+Object.entries(per).map(([k,v])=>`${k} ${v}`).join(' · '):'No matches in this class'):''}
+function showTalentDetail(t,b){const r=b.talents[t.id]||0;const ab=TALENT_NAME[b.cls][t.id];
+  const reqs=(t.req||[]).map(q=>{const id=Array.isArray(q)?q[0]:q.id;return TAL[b.cls][id]?.name}).filter(Boolean);
+  $('#detail').innerHTML=`<div class="hd"><span class="tile ${t.active?'':'passive'}${icCls(t.icon)}" style="--rc:var(--r-${t.active?'buff':'passive'})">${icImg(t.icon)||esc(initials(t.name))}</span><div><h2>${esc(t.name)}</h2><div class="sub">${esc(t.tree)} · row ${t.row+1} · rank ${r}/${t.max}</div></div></div>
+   <dl class="kv"><dt>Needs</dt><dd>${t.row*5} pts in ${esc(t.tree)}, level ${t.level}</dd>${reqs.length?`<dt>Requires</dt><dd>${esc(reqs.join(', '))}</dd>`:''}${ab?`<dt>Grants</dt><dd>${esc(ab)}</dd>`:''}</dl>
+   ${t.ranks?`<ol class="ranks">${t.ranks.map((x,i)=>`<li class="${i+1===r?'cur':''} ${i+1<r?'done':''}"><span>Rank ${i+1}</span>${hl(x)}</li>`).join('')}</ol>`:`<p class="desc">${hl(t.desc)}</p>`}<p style="margin-top:10px"><a href="https://www.wowhead.com/forever/spell=${t.id}" target="_blank" rel="noopener">Open on Wowhead ↗</a></p>`}
+
+/* ---------- tooltip ---------- */
+const tip=$('#tip');
+function tipFor(key,b,x,y){const it=findItem(key,b);if(!it){tip.hidden=true;return}
+  tip.innerHTML=`<b>${esc(it.name)}</b>${it.maxRank>1?`<div class="g">Rank ${it.rank||0} / ${it.maxRank}</div>`:''}
+   ${it.cost||it.range?`<div class="r"><span>${esc(it.cost||'')}</span><span>${esc(it.range||'')}</span></div>`:''}
+   ${it.cast||it.cd?`<div class="r"><span>${esc(it.cast||'')}</span><span>${esc(it.cd||'')}</span></div>`:''}
+   ${it.reqs&&it.reqs.length?`<div class="r"><span>${fmtList(it.reqs)}</span></div>`:''}
+   <div class="d">${esc(it.desc||'')}</div>${it.known===false?`<div class="g">${esc(it.why)}</div>`:''}`;
+  placeTip(x,y)}
+function tipTal(t,b,x,y){const r=b.talents[t.id]||0;const cur=rankText(t,r||1);
+  tip.innerHTML=`<b>${esc(t.name)}</b><div class="g">Rank ${r}/${t.max}${t.active?' · grants an ability':''}</div>${r===0&&t.max>1?'<div class="g">First rank:</div>':''}<div class="d">${hl(cur)}</div>${r>0&&r<t.max?`<div class="nx">Next rank:</div><div class="d">${hl(rankText(t,r+1))}</div>`:''}`;placeTip(x,y)}
+function placeTip(x,y){tip.hidden=false;const w=tip.offsetWidth,h=tip.offsetHeight;let L=x+16,T=y+16;if(L+w>innerWidth-8)L=x-w-12;if(T+h>innerHeight-8)T=y-h-12;tip.style.left=Math.max(8,L)+'px';tip.style.top=Math.max(8,T)+'px'}
+document.addEventListener('mousemove',e=>{const b=build();const k=e.target.closest('[data-key]');const tl=e.target.closest('[data-tal]');
+  if(k&&!e.buttons) tipFor(k.dataset.key,b,e.clientX,e.clientY); else if(tl) tipTal(TAL[b.cls][tl.dataset.tal],b,e.clientX,e.clientY); else tip.hidden=true});
+
+/* ---------- events ---------- */
+function placeOnSlot(b,slot,key,fromSlot){
+  if(fromSlot&&fromSlot!==slot){const prev=b.bars[slot];const fromWasExplicit=!!b.bars[fromSlot];
+    if(prev)b.bars[fromSlot]=prev;else delete b.bars[fromSlot];if(!fromWasExplicit&&!prev){} }
+  b.bars[slot]=key;saveBuild(b);render()}
+document.addEventListener('click',e=>{const b=build();const t=e.target;
+  const tg=t.closest('[data-ttag]');if(tg){const l=tg.dataset.ttag;S.talTags=(S.talTags||[]).includes(l)?S.talTags.filter(x=>x!==l):[...(S.talTags||[]),l];applyTalSearch(b);return}
+  if(t.closest('#ttagClear')){S.talTags=[];applyTalSearch(b);return}
+  const cb=t.closest('[data-cls]');if(cb){S.cls=cb.dataset.cls;S.talTags=[];S.selected=null;S.armed=null;$('#detail').innerHTML='<p class="empty">Hover or click an ability to see its full tooltip.</p>';render();return}
+  const v=t.closest('[data-view]');if(v){S.view=v.dataset.view;render();return}
+  const rc=t.closest('[data-role]');if(rc){const r=rc.dataset.role;S.filter.roles.has(r)?S.filter.roles.delete(r):S.filter.roles.add(r);render();return}
+  const clr=t.closest('[data-clear]');if(clr){delete b.bars[clr.dataset.clear];saveBuild(b);render();return}
+  const slot=t.closest('[data-slot]');
+  if(slot){const id=slot.dataset.slot;
+    if(S.edit){openSlotEditor(id,slot);return}
+    if(S.armed){b.bars[id]=S.armed;S.armed=null;saveBuild(b);render();return}
+    const inner=slot.querySelector('[data-key]');if(inner){S.selected=inner.dataset.key;showDetail(S.selected,b)}return}
+  const tl=t.closest('[data-tal]');if(tl){const tt=TAL[b.cls][tl.dataset.tal];
+    if(e.shiftKey?rmPt(b,tt):addPt(b,tt)){saveBuild(b)}S.selected=null;render();showTalentDetail(tt,b);return}
+  const fl=t.closest('[data-fill]');if(fl){fillTree(b,+fl.dataset.fill);saveBuild(b);render();return}
+  const rs=t.closest('[data-reset]');if(rs){const ti=+rs.dataset.reset;for(const id of Object.keys(b.talents))if(TAL[b.cls][id]?.treeIdx===ti)delete b.talents[id];saveBuild(b);render();return}
+  const sp=t.closest('.spell');if(sp){const key=sp.dataset.key;S.selected=key;const it=findItem(key,b);
+    S.armed=(it&&!it.passive&&it.known!==false&&S.armed!==key)?key:null;render();return}
+  const id=t.id;
+  if(id==='newB'){const nb=newBuild(S.cls,`New ${S.cls}`);S.builds[nb.id]=nb;S.sel[S.cls]=nb.id;saveBuild(nb);render();setTimeout(()=>$('#bName')?.select(),0)}
+  else if(id==='dupB'){const nb={...clean(b),id:uid(),name:b.name+' copy',talents:{...b.talents},bars:{...b.bars}};S.builds[nb.id]=nb;S.sel[S.cls]=nb.id;saveBuild(nb);render()}
+  else if(id==='delB'){if(t.dataset.confirm){deleteBuild(b);delete S.sel[S.cls];render()}else{t.dataset.confirm=1;t.textContent='Click again to delete';setTimeout(()=>{if(t.isConnected){delete t.dataset.confirm;t.textContent='Delete'}},3000)}}
+  else if(id==='dockToggle'){S.collapsed=!S.collapsed;render()}
+  else if(t.closest('#missBtn')){S.missing=!S.missing;render()}
+  else if(t.closest('#lvlDn')||t.closest('#lvlUp')){const step=e.shiftKey?5:1;setLevel(b,b.level+(t.closest('#lvlUp')?step:-step))}
+  else if(id==='exportBtn'){exportData()}
+  else if(id==='importBtn'){$('#importFile').click()}
+  else if(id==='editBars'){S.edit=!S.edit;S.armed=null;render()}
+  else if(id==='resetLayout'){if(t.dataset.confirm){S.settings.profiles[S.settings.profile]=defaultProfile(S.settings.profile);saveSettings();render()}else{t.dataset.confirm=1;t.textContent='Click again to reset';setTimeout(()=>{if(t.isConnected){delete t.dataset.confirm;t.textContent='Reset layout'}},3000)}}
+  else if(id==='clearBars'){if(t.dataset.confirm){b.bars={};saveBuild(b);render()}else{t.dataset.confirm=1;t.textContent='Click again to clear';setTimeout(()=>{if(t.isConnected){delete t.dataset.confirm;t.textContent="Clear this build's bars"}},3000)}}
+});
+document.addEventListener('contextmenu',e=>{const tl=e.target.closest('[data-tal]');if(!tl)return;e.preventDefault();const b=build();const tt=TAL[b.cls][tl.dataset.tal];if(rmPt(b,tt))saveBuild(b);render();showTalentDetail(tt,b)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){S.armed=null;closePop();render()}});
+document.addEventListener('change',e=>{const b=build();const t=e.target;
+  if(t.id==='selBuild'){S.sel[S.cls]=t.value;S.selected=null;render()}
+  else if(t.id==='bRace'){b.race=t.value;saveBuild(b);render()}
+  else if(t.id==='bName'){b.name=t.value.trim()||b.name;saveBuild(b);render()}
+  else if(t.id==='importFile'){const f=t.files&&t.files[0];if(f){const r=new FileReader();r.onload=()=>importData(r.result);r.readAsText(f)}t.value=''}
+  else if(t.id==='barProfile'){S.settings.profile=t.value;S.armed=null;saveSettings();render()}
+  else if(t.id==='barCount'){P().count=+t.value;saveSettings();render()}
+  else if(t.id==='fshow'){S.filter.show=t.value;render()}
+  else if(t.id==='bLvl'){b.level=+t.value;saveBuild(b);render()}
+  else if(t.id==='lvlNum'){setLevel(b,+t.value)}});
+function setLevel(b,v){v=Math.max(1,Math.min(60,Math.round(v)||b.level));if(v!==b.level){b.level=v;saveBuild(b)}render()}
+document.addEventListener('input',e=>{if(e.target.id==='talQ'){S.talQ=e.target.value;applyTalSearch(build())}});
+document.addEventListener('keydown',e=>{if(e.target.id==='talQ'&&e.key==='Escape'){e.target.value='';S.talQ='';applyTalSearch(build());e.stopPropagation()}});
+document.addEventListener('keydown',e=>{if(e.target.id==='lvlNum'&&e.key==='Enter'){setLevel(build(),+e.target.value)}});
+document.addEventListener('input',e=>{if(e.target.id==='bLvl'){const b=build();b.level=+e.target.value;$('#lvlNum').value=b.level;
+  clearTimeout(window.__lv);window.__lv=setTimeout(()=>{render()},120)}});
+// drag & drop (pointer-based, so it works inside the artifact viewer's frame)
+let drag=null,suppressClick=false;
+function dropTarget(x,y){const el=document.elementFromPoint(x,y);return el?el.closest('[data-slot],#trash'):null}
+function clearOver(){document.querySelectorAll('.over').forEach(x=>x.classList.remove('over'))}
+document.addEventListener('pointerdown',e=>{if(e.button!==0||e.pointerType==='touch')return;const k=e.target.closest('[data-key]');if(!k||k.classList.contains('nodrag'))return;
+  if(e.target.closest('[data-clear]'))return;const b=build();const it=findItem(k.dataset.key,b);if(!it||it.passive||it.known===false)return;
+  drag={key:k.dataset.key,from:k.closest('[data-slot]')?.dataset.slot&&k.dataset.from?k.dataset.from:null,x0:e.clientX,y0:e.clientY,active:false,ghost:null,it,lx:e.clientX,ly:e.clientY};try{k.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()});
+document.addEventListener('pointermove',e=>{if(!drag)return;
+  if(!drag.active){if(Math.hypot(e.clientX-drag.x0,e.clientY-drag.y0)<5)return;drag.active=true;tip.hidden=true;document.body.classList.add('dragging');
+    const g=document.createElement('div');g.className='ghost';g.innerHTML=tileHTML(drag.it);document.body.appendChild(g);drag.ghost=g}
+  drag.lx=e.clientX;drag.ly=e.clientY;drag.ghost.style.left=(e.clientX-21)+'px';drag.ghost.style.top=(e.clientY-21)+'px';
+  clearOver();const t=dropTarget(e.clientX,e.clientY);if(t)t.classList.add('over')});
+function endDrag(e,cancel){if(!drag)return;const d=drag;drag=null;clearOver();document.body.classList.remove('dragging');if(d.ghost)d.ghost.remove();
+  if(!d.active||cancel)return;suppressClick=true;setTimeout(()=>suppressClick=false,0);
+  const s=dropTarget(e.clientX||d.lx,e.clientY||d.ly)||dropTarget(d.lx,d.ly);if(!s)return;const b=build();
+  if(s.id==='trash'){if(d.from){delete b.bars[d.from];saveBuild(b);render()}return}
+  const to=s.dataset.slot;if(d.from===to)return;
+  if(d.from){const prev=b.bars[to];if(prev)b.bars[d.from]=prev;else delete b.bars[d.from]}
+  b.bars[to]=d.key;S.armed=null;saveBuild(b);render()}
+document.addEventListener('pointerup',e=>endDrag(e,false));
+document.addEventListener('mouseup',e=>endDrag(e,false));
+document.addEventListener('lostpointercapture',e=>{if(drag&&drag.active)endDrag({clientX:drag.lx,clientY:drag.ly},false)});
+document.addEventListener('pointercancel',e=>{if(drag&&drag.active)endDrag({clientX:drag.lx,clientY:drag.ly},false);else endDrag(e,true)});
+document.addEventListener('dragstart',e=>{if(e.target.closest&&e.target.closest('[data-key]'))e.preventDefault()});
+document.addEventListener('click',e=>{if(suppressClick){e.stopImmediatePropagation();e.preventDefault();suppressClick=false}},true);
+
+/* ---------- slot editor (shared template) ---------- */
+let pop=null;
+function closePop(){if(pop){pop.remove();pop.bg.remove();pop=null}}
+function openSlotEditor(id,el){closePop();const st=P();const r=el.getBoundingClientRect();
+  const bg=document.createElement('div');bg.className='modal-bg';bg.onclick=closePop;document.body.appendChild(bg);
+  pop=document.createElement('div');pop.className='pop';pop.bg=bg;
+  pop.innerHTML=`<b>${esc(st.binds[id]||'Slot')} <span class="sub">${id.replace(/^[a-z](\d+)s(\d+)$/,'Bar $1 · slot $2')}</span></b>
+   <label>Keybind label<input id="pKb" value="${esc(st.binds[id]||'')}" maxlength="6"></label>
+   <label>Role slot (same on every character)<select id="pRole"><option value="">None, free slot</option>${SLOT_ROLES.map(([k,l])=>`<option value="${k}" ${st.roles[id]===k?'selected':''}>${l}</option>`).join('')}</select></label>
+   <p class="hint" style="margin:0">A role slot fills itself with the best matching ability each character knows (e.g. Kick, Counterspell, Pummel). Drag a spell onto it to override for one build.</p>
+   <div class="row"><button class="btn" id="pCancel">Cancel</button><button class="btn primary" id="pSave">Save</button></div>`;
+  document.body.appendChild(pop);
+  const w=260,h=pop.offsetHeight;pop.style.left=Math.min(innerWidth-w-12,Math.max(12,r.left-w/2+23))+'px';pop.style.top=Math.max(12,r.top-h-10)+'px';
+  pop.querySelector('#pKb').focus();
+  pop.querySelector('#pCancel').onclick=closePop;
+  pop.querySelector('#pSave').onclick=()=>{const kb=pop.querySelector('#pKb').value.trim();const role=pop.querySelector('#pRole').value;
+    if(kb)st.binds[id]=kb;else delete st.binds[id];if(role)st.roles[id]=role;else delete st.roles[id];saveSettings();closePop();render()};
+  pop.addEventListener('keydown',e=>{if(e.key==='Enter')pop.querySelector('#pSave').click()});
+}
+
+render();
+})();
+</script>
