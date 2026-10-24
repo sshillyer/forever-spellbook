@@ -234,6 +234,16 @@ label.src > span{display:flex;flex-direction:column;min-width:0}
 label.src .hint{font-size:11.5px}
 label.src.extra{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 12px;align-items:center;justify-content:space-between}
 label.src.extra input{width:64px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:4px 6px;margin:0}
+.tree{position:relative;overflow:hidden}
+.tree.hasbg{background:#0e0c0a;border-color:#3d3427;color:#efe6d2}
+.tree .treebg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:.9;pointer-events:none;z-index:0}
+.tree.hasbg::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,8,6,.55),rgba(10,8,6,0) 18%,rgba(10,8,6,0) 82%,rgba(10,8,6,.35));z-index:0;pointer-events:none}
+.tree > .th,.tree > .tgrid{position:relative;z-index:1}
+.tree.hasbg .th b,.tree.hasbg .th .sp{color:#f3e6c4;text-shadow:0 1px 2px #000}
+.tree.hasbg .th .role{color:#cbbf9f;text-shadow:0 1px 2px #000}
+.tree.hasbg .th .btn{background:rgba(20,16,12,.75);border-color:#5a4d3a;color:#efe6d2}
+.tree.hasbg .tal.off .tile{filter:grayscale(1) brightness(.85);opacity:.78}
+.tree.hasbg .arrows .off{stroke:#8d8270}.tree.hasbg .arrows .ah-off{fill:#8d8270}
 .armedmsg{color:var(--accent);font-weight:600}
 /* tooltip */
 .tip{position:fixed;z-index:50;max-width:330px;background:var(--tip);color:var(--tip-fg);border:1px solid #5a4e3a;border-radius:6px;padding:9px 11px;font-size:12.5px;pointer-events:none;box-shadow:var(--shadow)}
@@ -611,7 +621,8 @@ function renderTalents(b){
       const st=r>=t.max?'full':(can?'can':(r>0?'':'off'));const it={name:t.name,roles:t.active?(D.classes[b.cls].abilities.find(a=>a.talent===t.id)?.roles||['utility']):['passive'],passive:false};
       return `<button class="tal ${st} ${t.active?'act':''}" style="grid-row:${t.row+1};grid-column:${t.col+1}" data-tal="${t.id}" aria-label="${esc(t.name)} ${r}/${t.max}">
         ${t.active?'<span class="star">★</span>':''}<span class="tile${icCls(t.icon)}" style="--rc:var(--r-${t.active?mainRole(it.roles):'passive'})">${icImg(t.icon)||esc(initials(t.name))}</span><span class="rk">${r}/${t.max}</span></button>`}).join('');
-    return `<div class="tree"><div class="th"><b>${esc(tr.name)}</b><span class="role">${tr.role}</span><span class="sp">${pts}</span>
+    const bgi=tr.treeId&&IC['treebg-'+tr.treeId];
+    return `<div class="tree ${bgi?'hasbg':''}">${bgi?`<img class="treebg" alt="" draggable="false" src="data:image/jpeg;base64,${bgi}">`:''}<div class="th"><b>${esc(tr.name)}</b><span class="role">${tr.role}</span><span class="sp">${pts}</span>
       <button class="btn small" data-fill="${ti}" title="Greedily fill this tree (active talents first)">Fill</button><button class="btn small" data-reset="${ti}">Reset</button></div>
       <div class="tgrid">${arrowsSVG(tr,b)}${cells}</div></div>`}).join('')}</div>
     <p class="hint">Click to add a point, right-click (or shift-click) to remove. Green outline = available, gold = maxed, ★ = grants an ability that will appear in your spellbook. Each row needs 5 points in that tree.</p>`;
