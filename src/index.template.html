@@ -190,6 +190,33 @@ ol.ranks li.cur span{color:#b8860b}
 .ttag-clear{color:var(--muted)}
 .io{display:flex;gap:6px}
 .iomsg{font-size:12px;color:var(--ok)}
+.sumhead{display:flex;align-items:center;gap:12px 18px;flex-wrap:wrap;margin:0 0 14px}
+.sumhead b{font:600 15px "IBM Plex Sans Condensed"}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{border:0;background:var(--panel);padding:5px 12px;font-size:12.5px;color:var(--muted)}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-selected="true"]{background:var(--fg);color:var(--bg)}
+.sgroup{margin-bottom:20px}
+.sgroup h3{font:700 15px Cinzel,Georgia,serif;margin:0 0 8px;display:flex;gap:8px;align-items:baseline}
+.sgroup h3 span{font:400 12px "IBM Plex Sans Condensed";color:var(--faint)}
+.srow{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;padding:6px 0;border-top:1px solid var(--line)}
+.srl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding-top:8px}
+@media (max-width:640px){.srow{grid-template-columns:minmax(0,1fr)}.srl{padding-top:0}}
+.slist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:6px}
+.sitem{display:flex;gap:10px;align-items:flex-start;text-align:left;background:var(--panel);border:1px solid transparent;border-radius:8px;padding:7px 9px 7px 7px;min-width:0;width:100%}
+.sitem:hover{border-color:var(--line)}
+.sitem .tile{width:34px;height:34px}
+.stxt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.sn{font-weight:600;font-size:13.5px}
+.sr{font:500 11px "IBM Plex Mono";color:var(--muted);margin-left:4px}
+.sr.full{color:#b8860b}
+.sref{display:block;font-weight:400;font-size:11px;color:var(--faint)}
+.sd{font-size:12.5px;color:var(--fg);opacity:.85}
+.sab{font-size:11.5px;color:var(--accent)}
+ol.order{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:4px}
+ol.order li{display:flex;gap:7px;align-items:center;font-size:12.5px;background:var(--panel);border-radius:6px;padding:3px 6px;cursor:pointer}
+ol.order .tile{width:22px;height:22px;font-size:9px}
+.olv{font:500 11px "IBM Plex Mono";color:var(--faint);min-width:2ch;text-align:right}
 .armedmsg{color:var(--accent);font-weight:600}
 /* tooltip */
 .tip{position:fixed;z-index:50;max-width:330px;background:var(--tip);color:var(--tip-fg);border:1px solid #5a4e3a;border-radius:6px;padding:9px 11px;font-size:12.5px;pointer-events:none;box-shadow:var(--shadow)}
@@ -377,8 +404,14 @@ function reqOk(b,t){return (t.req||[]).every(q=>{const id=Array.isArray(q)?q[0]:
 function canAdd(b,t){const cur=b.talents[t.id]||0;return cur<t.max && spent(b)<budget(b) && treePts(b,t.treeIdx,t.row)>=t.row*5 && reqOk(b,t)}
 function valid(b){for(const [id,r] of Object.entries(b.talents)){const t=TAL[b.cls][id];if(!t)continue;if(r>0&&(treePts(b,t.treeIdx,t.row)<t.row*5||!reqOk(b,t)))return false}return true}
 function canRemove(b,t){const cur=b.talents[t.id]||0;if(!cur)return false;b.talents[t.id]=cur-1;const ok=valid(b);b.talents[t.id]=cur;return ok}
-function addPt(b,t){if(!canAdd(b,t))return false;b.talents[t.id]=(b.talents[t.id]||0)+1;return true}
-function rmPt(b,t){if(!canRemove(b,t))return false;b.talents[t.id]--;if(!b.talents[t.id])delete b.talents[t.id];return true}
+function addPt(b,t){if(!canAdd(b,t))return false;b.talents[t.id]=(b.talents[t.id]||0)+1;(b.order=b.order||[]).push(t.id);return true}
+function rmPt(b,t){if(!canRemove(b,t))return false;b.talents[t.id]--;if(!b.talents[t.id])delete b.talents[t.id];if(b.order){const i=b.order.lastIndexOf(t.id);if(i>=0)b.order.splice(i,1)}return true}
+// Pick order: keep recorded clicks that still match the build, then append any untracked points in tree/row order.
+function pickOrder(b){const left={...b.talents};const out=[];let guessed=0;
+  for(const id of (b.order||[])){if(left[id]>0){left[id]--;out.push(+id)}}
+  const rest=Object.entries(left).filter(([,n])=>n>0).map(([id,n])=>[TAL[b.cls][id],n]).filter(([t])=>t).sort(([a],[c])=>a.treeIdx-c.treeIdx||a.row-c.row||a.col-c.col);
+  for(const [t,n] of rest)for(let i=0;i<n;i++){out.push(t.id);guessed++}
+  return {order:out,guessed}}
 function fillTree(b,ti){const tr=D.classes[b.cls].trees[ti];
   const order=[...tr.talents].sort((a,c)=>a.row-c.row||(!!c.active-!!a.active)||a.col-c.col);
   let changed=true;while(changed){changed=false;for(const t of order){while(addPt(b,TAL[b.cls][t.id]))changed=true}}}
@@ -409,8 +442,8 @@ function render(){
   // class tabs
   $('#classTabs').innerHTML=CLASSES.map(c=>`<button role="tab" aria-selected="${c===S.cls}" data-cls="${c}" style="--c:${D.classes[c].color}">${c}</button>`).join('');
   renderCharbar(b);
-  $('#views').innerHTML=[['book','Spellbook'],['talents','Talents'],['all','All abilities']].map(([k,l])=>`<button role="tab" aria-selected="${S.view===k}" data-view="${k}">${l}${k==='talents'?` <span style="opacity:.7">${spent(b)}/${budget(b)}</span>`:''}</button>`).join('');
-  if(S.view==='talents') renderTalents(b); else if(S.view==='all') renderAll(b); else renderBook(b);
+  $('#views').innerHTML=[['book','Spellbook'],['talents','Talents'],['summary','Build summary'],['all','All abilities']].map(([k,l])=>`<button role="tab" aria-selected="${S.view===k}" data-view="${k}">${l}${k==='talents'?` <span style="opacity:.7">${spent(b)}/${budget(b)}</span>`:''}</button>`).join('');
+  if(S.view==='talents') renderTalents(b); else if(S.view==='summary') renderSummary(b); else if(S.view==='all') renderAll(b); else renderBook(b);
   renderBars(b);
   if(S.selected) showDetail(S.selected,b);
   saveUI();
@@ -427,6 +460,38 @@ function renderCharbar(b){
    <span class="spacer"></span>
    <button class="btn" id="newB">New</button><button class="btn" id="dupB">Duplicate</button><button class="btn danger" id="delB">Delete</button>`;
 }
+/* ---------- build summary ---------- */
+function picked(b){return Object.entries(b.talents||{}).filter(([,r])=>r>0).map(([id,r])=>({t:TAL[b.cls][id],r})).filter(x=>x.t).sort((a,c)=>a.t.treeIdx-c.t.treeIdx||a.t.row-c.t.row||a.t.col-c.t.col)}
+function sumItem(x,b,ref){const {t,r}=x;const ab=TALENT_NAME[b.cls][t.id];const role=t.active?(D.classes[b.cls].abilities.find(a=>a.talent===t.id)?.roles||['utility']):['passive'];
+  return `<button class="sitem" data-stal="${t.id}"><span class="tile${icCls(t.icon)}" style="--rc:var(--r-${t.active?mainRole(role):'passive'})">${icImg(t.icon)||esc(initials(t.name))}</span>
+   <span class="stxt"><span class="sn">${esc(t.name)} <span class="sr ${r>=t.max?'full':''}">${r}/${t.max}</span>${ref?`<span class="sref">${esc(t.tree)} · row ${t.row+1}</span>`:''}</span>
+   <span class="sd">${esc(rankText(t,r))}</span>${ab?`<span class="sab">★ Grants ${esc(ab)}</span>`:''}</span></button>`}
+function sumGroups(b){const P=picked(b);const g=S.sumGroup||'tree';const out=[];
+  if(g==='tree'){D.classes[b.cls].trees.forEach((tr,ti)=>{const items=P.filter(x=>x.t.treeIdx===ti);if(!items.length)return;
+      const rows=[...new Set(items.map(x=>x.t.row))];out.push({title:tr.name,sub:`${treePts(b,ti)} points`,rows:rows.map(r=>({label:`Row ${r+1} · level ${10+r*5}`,items:items.filter(x=>x.t.row===r)}))})})}
+  else if(g==='tag'){const tags=TAL_TAGS[b.cls]||[];const used=new Set();
+    for(const [l,re] of tags){const rx=new RegExp(re,'i');const items=P.filter(x=>rx.test(talText(x.t,b)));if(items.length){items.forEach(x=>used.add(x.t.id));out.push({title:l,sub:`${items.length} talent${items.length>1?'s':''}`,items,ref:true})}}
+    const other=P.filter(x=>!used.has(x.t.id));if(other.length)out.push({title:'Other',sub:`${other.length}`,items:other,ref:true})}
+  else{const act=P.filter(x=>x.t.active),pas=P.filter(x=>!x.t.active);
+    if(act.length)out.push({title:'Grants abilities',sub:'new buttons for your bars',items:act,ref:true});if(pas.length)out.push({title:'Passive effects',sub:`${pas.length} talents`,items:pas,ref:true})}
+  return out}
+function renderSummary(b){const P=picked(b);const trees=D.classes[b.cls].trees;const split=trees.map((tr,ti)=>treePts(b,ti)).join(' / ');
+  const g=S.sumGroup||'tree';const groups=sumGroups(b);const {order,guessed}=pickOrder(b);
+  $('#main').innerHTML=`<div class="sumhead"><div><b>${spent(b)} points</b> <span class="hint">${split} (${trees.map(t=>esc(t.name)).join(' / ')})</span></div>
+     <div class="seg" role="tablist">${[['tree','By tree & row'],['tag','By tag'],['type','Actives vs passives']].map(([k,l])=>`<button data-sgroup="${k}" aria-selected="${g===k}">${l}</button>`).join('')}</div>
+     <button class="btn small" id="sumCopy">Copy as text</button></div>
+   ${P.length?groups.map(G=>`<section class="sgroup"><h3>${esc(G.title)} <span>${esc(G.sub)}</span></h3>
+     ${G.rows?G.rows.map(R=>`<div class="srow"><div class="srl">${R.label}</div><div class="slist">${R.items.map(x=>sumItem(x,b,false)).join('')}</div></div>`).join(''):`<div class="slist">${G.items.map(x=>sumItem(x,b,G.ref)).join('')}</div>`}</section>`).join('')
+     :'<p class="empty">No talent points spent yet. Open <b>Talents</b> and start clicking; this page lists every effect at the rank you picked.</p>'}
+   ${order.length?`<section class="sgroup"><h3>Leveling order <span>${order.length} points, level 10 to ${9+order.length}</span></h3>
+     ${guessed?`<p class="hint" style="margin:0 0 8px">${guessed===order.length?'Points spent before order tracking (or via Fill) are listed tree by tree.':`The last ${guessed} point${guessed>1?'s were':' was'} spent before order tracking and ${guessed>1?'are':'is'} listed tree by tree.`}</p>`:''}
+     <ol class="order">${order.map((id,i)=>{const t=TAL[b.cls][id];const r=order.slice(0,i+1).filter(x=>x===id).length;return `<li data-stal="${id}"><span class="olv">${10+i}</span><span class="tile${icCls(t.icon)}">${icImg(t.icon)||esc(initials(t.name))}</span><span>${esc(t.name)} <span class="sr">${r}/${t.max}</span></span></li>`}).join('')}</ol></section>`:''}`}
+function summaryText(b){const trees=D.classes[b.cls].trees;const L=[`${b.name} · level ${b.level} ${RACES[b.race]} ${b.cls}`,`Talents: ${trees.map((tr,ti)=>treePts(b,ti)).join('/')} (${trees.map(t=>t.name).join(' / ')})`,''];
+  for(const G of sumGroups(b)){L.push(`== ${G.title} (${G.sub}) ==`);
+    const items=G.rows?G.rows.flatMap(R=>R.items):G.items;for(const {t,r} of items)L.push(`- ${t.name} ${r}/${t.max}${G.ref?` [${t.tree} r${t.row+1}]`:` [row ${t.row+1}]`}: ${rankText(t,r)}`);L.push('')}
+  const {order}=pickOrder(b);if(order.length){L.push('== Leveling order ==');L.push(order.map((id,i)=>`${10+i} ${TAL[b.cls][id].name}`).join(', '))}
+  return L.join('\n')}
+async function copySummary(b,btn){const txt=summaryText(b);try{await navigator.clipboard.writeText(txt);btn.textContent='Copied!'}catch(e){const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');btn.textContent='Copied!'}catch(_){btn.textContent='Copy failed'}ta.remove()}setTimeout(()=>{if(btn.isConnected)btn.textContent='Copy as text'},2000)}
 function spellBtn(it,b,opts={}){const miss=opts.bars&&S.missing&&isMissing(it,opts.bars);
   const draggable=!it.passive&&(it.known!==false);
   const meta=[];if(it.maxRank>1)meta.push(`Rank ${it.rank}/${it.maxRank}`);if(it.cast)meta.push(it.cast);if(it.cd)meta.push(it.cd.replace(' cooldown',' cd'));
@@ -585,7 +650,7 @@ document.addEventListener('click',e=>{const b=build();const t=e.target;
   const tg=t.closest('[data-ttag]');if(tg){const l=tg.dataset.ttag;S.talTags=(S.talTags||[]).includes(l)?S.talTags.filter(x=>x!==l):[...(S.talTags||[]),l];applyTalSearch(b);return}
   if(t.closest('#ttagClear')){S.talTags=[];applyTalSearch(b);return}
   const cb=t.closest('[data-cls]');if(cb){S.cls=cb.dataset.cls;S.talTags=[];S.selected=null;S.armed=null;$('#detail').innerHTML='<p class="empty">Hover or click an ability to see its full tooltip.</p>';render();return}
-  const v=t.closest('[data-view]');if(v){S.view=v.dataset.view;render();return}
+  const v=t.closest('[data-view]');if(v){S.view=v.dataset.view;if(S.view==='summary')$('#detail').innerHTML='<p class="empty">Click any talent in the summary to see all of its ranks.</p>';render();return}
   const rc=t.closest('[data-role]');if(rc){const r=rc.dataset.role;S.filter.roles.has(r)?S.filter.roles.delete(r):S.filter.roles.add(r);render();return}
   const clr=t.closest('[data-clear]');if(clr){delete b.bars[clr.dataset.clear];saveBuild(b);render();return}
   const slot=t.closest('[data-slot]');
@@ -596,7 +661,10 @@ document.addEventListener('click',e=>{const b=build();const t=e.target;
   const tl=t.closest('[data-tal]');if(tl){const tt=TAL[b.cls][tl.dataset.tal];
     if(e.shiftKey?rmPt(b,tt):addPt(b,tt)){saveBuild(b)}S.selected=null;render();showTalentDetail(tt,b);return}
   const fl=t.closest('[data-fill]');if(fl){fillTree(b,+fl.dataset.fill);saveBuild(b);render();return}
-  const rs=t.closest('[data-reset]');if(rs){const ti=+rs.dataset.reset;for(const id of Object.keys(b.talents))if(TAL[b.cls][id]?.treeIdx===ti)delete b.talents[id];saveBuild(b);render();return}
+  const rs=t.closest('[data-reset]');if(rs){const ti=+rs.dataset.reset;for(const id of Object.keys(b.talents))if(TAL[b.cls][id]?.treeIdx===ti)delete b.talents[id];if(b.order)b.order=b.order.filter(id=>TAL[b.cls][id]?.treeIdx!==ti);saveBuild(b);render();return}
+  const sg=t.closest('[data-sgroup]');if(sg){S.sumGroup=sg.dataset.sgroup;render();return}
+  const st=t.closest('[data-stal]');if(st){showTalentDetail(TAL[b.cls][st.dataset.stal],b);return}
+  if(t.closest('#sumCopy')){copySummary(b,t.closest('#sumCopy'));return}
   const sp=t.closest('.spell');if(sp){const key=sp.dataset.key;S.selected=key;const it=findItem(key,b);
     S.armed=(it&&!it.passive&&it.known!==false&&S.armed!==key)?key:null;render();return}
   const id=t.id;
