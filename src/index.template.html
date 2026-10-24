@@ -358,13 +358,16 @@ let db=null, mode='connecting'; const timers={}; const pending=new Set();
 function chip(state,text){const c=$('#saveChip');c.className='save-chip '+state;c.lastChild.textContent=text}
 function persistLocal(){try{localStorage.setItem('fsb-data',JSON.stringify({builds:Object.fromEntries(Object.entries(S.builds).filter(([k,v])=>!v._transient)),settings:S.settings}))}catch(e){}}
 function clean(o){const c={...o};delete c._transient;return JSON.parse(JSON.stringify(c))}
+const writeSeq={};
 function queueWrite(path,getData){
   if(mode!=='db'){persistLocal();return}
-  pending.add(path);chip('busy','Saving…');clearTimeout(timers[path]);
+  pending.add(path);chip('busy','Saving…');clearTimeout(timers[path]);const my=writeSeq[path]=(writeSeq[path]||0)+1;
   timers[path]=setTimeout(async()=>{const data=getData();
     try{ if(data===null) await db.doc(path).delete(); else await db.doc(path).set(data); chip('ok','Saved with the page')}
     catch(e){ if(e&&e.code==='invalid_argument'){mode='local';chip('local','Read-only here · saving in this browser');persistLocal()} else chip('local','Save failed: '+(e&&e.code||'error'))}
-    finally{pending.delete(path)}},600)}
+    finally{if(writeSeq[path]===my)pending.delete(path)}},600)}
+// Snapshots arrive frozen (nested objects too), so keep mutable copies in page state.
+const thaw=o=>JSON.parse(JSON.stringify(o));
 function saveBuild(b){delete b._transient;queueWrite('builds/'+b.id,()=>S.builds[b.id]?clean(S.builds[b.id]):null)}
 function deleteBuild(b){delete S.builds[b.id];if(!b._transient) queueWrite('builds/'+b.id,()=>null)}
 function saveSettings(){queueWrite('app/settings',()=>clean(S.settings))}
@@ -389,10 +392,10 @@ function loadLocal(){try{const d=JSON.parse(localStorage.getItem('fsb-data')||'n
   mode='db';chip('ok','Saved with the page');
   db.collection('builds').onSnapshot(snap=>{
     for(const ch of snap.docChanges()){const id=ch.doc.id;if(pending.has('builds/'+id)) continue;
-      if(ch.type==='removed') delete S.builds[id]; else S.builds[id]={...ch.doc.data(),id}}
+      if(ch.type==='removed') delete S.builds[id]; else S.builds[id]={...thaw(ch.doc.data()),id}}
     for(const [k,v] of Object.entries(S.builds)) if(v._transient && Object.values(S.builds).some(x=>x.cls===v.cls&&!x._transient)) delete S.builds[k];
     render()},e=>{chip('local','Sync stopped ('+e.code+')')});
-  db.doc('app/settings').onSnapshot(s=>{if(pending.has('app/settings'))return;if(s.exists){S.settings=mergeSettings(s.data());render()}},()=>{});
+  db.doc('app/settings').onSnapshot(s=>{if(pending.has('app/settings'))return;if(s.exists){S.settings=mergeSettings(thaw(s.data()));render()}},()=>{});
 })();
 setTimeout(()=>{if(mode==='connecting'){mode='local';loadLocal();chip('local','Saving in this browser only');render()}},11000);
 
