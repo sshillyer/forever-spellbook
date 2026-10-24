@@ -22697,5 +22697,809 @@
   "source": "Wowhead WoW Forever (talent calculator data + spell tooltips)",
   "pulled": "2026-10-23",
   "note": "Beta data; Blizzard is still tuning. Rank 1 of talent spells comes from the talent."
+ },
+ "legacy": {
+  "cap": 16,
+  "build": "1.60.1.69800",
+  "trees": [
+   {
+    "id": 1187,
+    "name": "Professions",
+    "blurb": "Crafting, gathering and gold.",
+    "nodes": [
+     {
+      "id": 110289,
+      "name": "Master Chef",
+      "icon": "achievement_profession_chefhat",
+      "max": 5,
+      "col": 2,
+      "row": 0,
+      "req": 5,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "Your cooking recipes have a 10% chance to create an extra result.",
+       "Your cooking recipes have a 20% chance to create an extra result.",
+       "Your cooking recipes have a 30% chance to create an extra result.",
+       "Your cooking recipes have a 40% chance to create an extra result.",
+       "Your cooking recipes have a 50% chance to create an extra result."
+      ]
+     },
+     {
+      "id": 110290,
+      "name": "Working Overtime",
+      "icon": "inv_misc_pocketwatch_03",
+      "max": 5,
+      "col": 0,
+      "row": 1,
+      "req": 0,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "Increases your chance to gain a skill increase from using any primary, secondary, or class-based tradeskill by 4%.",
+       "Increases your chance to gain a skill increase from using any primary, secondary, or class-based tradeskill by 8%.",
+       "Increases your chance to gain a skill increase from using any primary, secondary, or class-based tradeskill by 12%.",
+       "Increases your chance to gain a skill increase from using any primary, secondary, or class-based tradeskill by 16%.",
+       "Increases your chance to gain a skill increase from using any primary, secondary, or class-based tradeskill by 20%."
+      ]
+     },
+     {
+      "id": 110286,
+      "name": "Bartering",
+      "icon": "inv_misc_coin_06",
+      "max": 2,
+      "col": 1,
+      "row": 1,
+      "req": 5,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "Reduces the gold price of items from all vendors by 5%.",
+       "Reduces the gold price of items from all vendors by 10%."
+      ]
+     },
+     {
+      "id": 110284,
+      "name": "Dedicated Study",
+      "icon": "inv_misc_book_08",
+      "max": 1,
+      "col": 2,
+      "row": 1,
+      "req": 10,
+      "locked": false,
+      "cast": "25 sec",
+      "cd": "23 hr",
+      "ranks": [
+       "Increases your skill by 1 in your lowest tradeskill among your Primary and Secondary tradeskills. If you have already reached 300 skill in your two current Primary Tradeskills and all three Secondary Tradeskills, you will gain 2 to 4 of a random Elemental Essence."
+      ]
+     },
+     {
+      "id": 110291,
+      "name": "Bountiful Harvest",
+      "icon": "inv_misc_bag_18",
+      "max": 5,
+      "col": 0,
+      "row": 2,
+      "req": 0,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "You discover 20% more Scarce materials from Mining, Herbalism, and Skinning.",
+       "You discover 40% more Scarce materials from Mining, Herbalism, and Skinning.",
+       "You discover 60% more Scarce materials from Mining, Herbalism, and Skinning.",
+       "You discover 80% more Scarce materials from Mining, Herbalism, and Skinning.",
+       "You discover 100% more Scarce materials from Mining, Herbalism, and Skinning."
+      ]
+     },
+     {
+      "id": 110292,
+      "name": "Performance Bonus",
+      "icon": "racial_dwarf_findtreasure",
+      "max": 3,
+      "col": 1,
+      "row": 2,
+      "req": 5,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "You have a 5% chance to receive 100% increased Merchant's Favor when you turn in a crate to the Azeroth Commerce Authority or Durotar Supply and Logistics.",
+       "You have a 10% chance to receive 100% increased Merchant's Favor when you turn in a crate to the Azeroth Commerce Authority or Durotar Supply and Logistics.",
+       "You have a 15% chance to receive 100% increased Merchant's Favor when you turn in a crate to the Azeroth Commerce Authority or Durotar Supply and Logistics."
+      ]
+     },
+     {
+      "id": 113508,
+      "name": "Unknown",
+      "icon": "inv_misc_questionmark",
+      "max": 1,
+      "col": 2,
+      "row": 2,
+      "req": 0,
+      "locked": true,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "To be added in a future update."
+      ]
+     },
+     {
+      "id": 113506,
+      "name": "Unknown",
+      "icon": "inv_misc_questionmark",
+      "max": 1,
+      "col": 3,
+      "row": 2,
+      "req": 0,
+      "locked": true,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "To be added in a future update."
+      ]
+     },
+     {
+      "id": 110293,
+      "name": "Luremaster",
+      "icon": "inv_misc_basket_04",
+      "max": 2,
+      "col": 2,
+      "row": 3,
+      "req": 5,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "While fishing with a Lure active, you have a 25% chance to catch an extra fish.",
+       "While fishing with a Lure active, you have a 50% chance to catch an extra fish."
+      ]
+     }
+    ],
+    "edges": [
+     [
+      110286,
+      110284
+     ],
+     [
+      110291,
+      110292
+     ],
+     [
+      113508,
+      113506
+     ]
+    ]
+   },
+   {
+    "id": 1188,
+    "name": "Adventure",
+    "blurb": "Levelling, exploration and utility.",
+    "nodes": [
+     {
+      "id": 110305,
+      "name": "High Alert",
+      "icon": "spell_shadow_detectlesserinvisibility",
+      "max": 2,
+      "col": 1,
+      "row": 0,
+      "req": 5,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "Increases your ability to detect nearby targets with Stealth as if your level were increased by 1. Ineffective in Battlegrounds.",
+       "Increases your ability to detect nearby targets with Stealth as if your level were increased by 2. Ineffective in Battlegrounds."
+      ]
+     },
+     {
+      "id": 110301,
+      "name": "Well Rested",
+      "icon": "spell_nature_sleep",
+      "max": 5,
+      "col": 0,
+      "row": 1,
+      "req": 0,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "Your rested experience accumulates 4% faster and your rested experience cap is increased by 4%.",
+       "Your rested experience accumulates 8% faster and your rested experience cap is increased by 8%.",
+       "Your rested experience accumulates 12% faster and your rested experience cap is increased by 12%.",
+       "Your rested experience accumulates 16% faster and your rested experience cap is increased by 16%.",
+       "Your rested experience accumulates 20% faster and your rested experience cap is increased by 20%."
+      ]
+     },
+     {
+      "id": 110298,
+      "name": "Talented",
+      "icon": "ability_marksmanship",
+      "max": 5,
+      "col": 1,
+      "row": 1,
+      "req": 5,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "You gain talent points every level starting at level 9 instead of starting at level 10, but you still may not have more than 51 total talent points.",
+       "You gain talent points every level starting at level 8 instead of starting at level 10, but you still may not have more than 51 total talent points.",
+       "You gain talent points every level starting at level 7 instead of starting at level 10, but you still may not have more than 51 total talent points.",
+       "You gain talent points every level starting at level 6 instead of starting at level 10, but you still may not have more than 51 total talent points.",
+       "You gain talent points every level starting at level 5 instead of starting at level 10, but you still may not have more than 51 total talent points."
+      ]
+     },
+     {
+      "id": 113511,
+      "name": "Unknown",
+      "icon": "inv_misc_questionmark",
+      "max": 1,
+      "col": 2,
+      "row": 1,
+      "req": 0,
+      "locked": true,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "To be added in a future update."
+      ]
+     },
+     {
+      "id": 113510,
+      "name": "Unknown",
+      "icon": "inv_misc_questionmark",
+      "max": 1,
+      "col": 3,
+      "row": 1,
+      "req": 0,
+      "locked": true,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "To be added in a future update."
+      ]
+     },
+     {
+      "id": 110296,
+      "name": "Thrill of Adventure",
+      "icon": "ability_hunter_huntervswild",
+      "max": 5,
+      "col": 0,
+      "row": 2,
+      "req": 0,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "You gain 1% of your maximum Health and Mana over 10 sec each time you deliver the killing blow to a non-trivial enemy. Ineffective in dungeons, raids, and battlegrounds.",
+       "You gain 2% of your maximum Health and Mana over 10 sec each time you deliver the killing blow to a non-trivial enemy. Ineffective in dungeons, raids, and battlegrounds.",
+       "You gain 3% of your maximum Health and Mana over 10 sec each time you deliver the killing blow to a non-trivial enemy. Ineffective in dungeons, raids, and battlegrounds.",
+       "You gain 4% of your maximum Health and Mana over 10 sec each time you deliver the killing blow to a non-trivial enemy. Ineffective in dungeons, raids, and battlegrounds.",
+       "You gain 5% of your maximum Health and Mana over 10 sec each time you deliver the killing blow to a non-trivial enemy. Ineffective in dungeons, raids, and battlegrounds."
+      ]
+     },
+     {
+      "id": 110304,
+      "name": "Field Guide",
+      "icon": "inv_fishingchair",
+      "max": 3,
+      "col": 1,
+      "row": 2,
+      "req": 5,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "Reduces your cooldown on adding Camp features by 8%",
+       "Reduces your cooldown on adding Camp features by 17%",
+       "Reduces your cooldown on adding Camp features by 25%"
+      ]
+     },
+     {
+      "id": 110300,
+      "name": "Frequent Flier",
+      "icon": "achievement_guild_ridelikethewind",
+      "max": 1,
+      "col": 2,
+      "row": 2,
+      "req": 10,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "You receive a 50% discount on all flight paths, and your flight path mount flies 20% faster."
+      ]
+     },
+     {
+      "id": 110303,
+      "name": "Field Medicine",
+      "icon": "inv_misc_bandage_05",
+      "max": 2,
+      "col": 1,
+      "row": 3,
+      "req": 5,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "Reduces the duration of the Recently Bandaged effect by 5 sec when you use a bandage. Ineffective in dungeons, raids, and battlegrounds.",
+       "Reduces the duration of the Recently Bandaged effect by 10 sec when you use a bandage. Ineffective in dungeons, raids, and battlegrounds."
+      ]
+     }
+    ],
+    "edges": [
+     [
+      110301,
+      110298
+     ],
+     [
+      110304,
+      110300
+     ],
+     [
+      113511,
+      113510
+     ]
+    ]
+   },
+   {
+    "id": 1189,
+    "name": "Resourcefulness",
+    "blurb": "Upkeep, reputation and honor.",
+    "nodes": [
+     {
+      "id": 110319,
+      "name": "For Great Honor",
+      "icon": "achievement_bg_winwsg",
+      "max": 5,
+      "col": 1,
+      "row": 0,
+      "req": 5,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "Increases Honor Points gained by 2%.",
+       "Increases Honor Points gained by 4%.",
+       "Increases Honor Points gained by 6%.",
+       "Increases Honor Points gained by 8%.",
+       "Increases Honor Points gained by 10%."
+      ]
+     },
+     {
+      "id": 110313,
+      "name": "Gourmand",
+      "icon": "inv_misc_food_64",
+      "max": 3,
+      "col": 0,
+      "row": 1,
+      "req": 0,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "Increases the duration of beneficial effects from eating food by 33%.",
+       "Increases the duration of beneficial effects from eating food by 67%.",
+       "Increases the duration of beneficial effects from eating food by 100%."
+      ]
+     },
+     {
+      "id": 110316,
+      "name": "Permanence",
+      "icon": "spell_misc_emotionhappy",
+      "max": 2,
+      "col": 1,
+      "row": 1,
+      "req": 5,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "Your class abilities which grant long-duration stat or attribute benefits to all party or raid members last 50% longer, and the benefits you gain from resting at a camp last 50% longer.",
+       "Your class abilities which grant long-duration stat or attribute benefits to all party or raid members last 100% longer, and the benefits you gain from resting at a camp last 100% longer."
+      ]
+     },
+     {
+      "id": 113513,
+      "name": "Unknown",
+      "icon": "inv_misc_questionmark",
+      "max": 1,
+      "col": 2,
+      "row": 1,
+      "req": 0,
+      "locked": true,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "To be added in a future update."
+      ]
+     },
+     {
+      "id": 113512,
+      "name": "Unknown",
+      "icon": "inv_misc_questionmark",
+      "max": 1,
+      "col": 3,
+      "row": 1,
+      "req": 0,
+      "locked": true,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "To be added in a future update."
+      ]
+     },
+     {
+      "id": 110315,
+      "name": "The Quick and the Dead",
+      "icon": "spell_shadow_deadofnight",
+      "max": 2,
+      "col": 0,
+      "row": 2,
+      "req": 0,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "Increases movement speed while dead by 5% and your helpful spells and abilities cost no resources for 1 min after being resurrected or until you enter combat.",
+       "Increases movement speed while dead by 10% and your helpful spells and abilities cost no resources for 2 min after being resurrected or until you enter combat."
+      ]
+     },
+     {
+      "id": 110309,
+      "name": "Reagent Economy",
+      "icon": "inv_misc_candle_02",
+      "max": 1,
+      "col": 2,
+      "row": 2,
+      "req": 10,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "Your class abilities no longer require reagents purchaseable from vendors, and your Tier 1 camping features cost no reagents to craft."
+      ]
+     },
+     {
+      "id": 110318,
+      "name": "Reinforce",
+      "icon": "inv_misc_armorkit_17",
+      "max": 5,
+      "col": 0,
+      "row": 3,
+      "req": 0,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "You take 8% less durability loss when you die.",
+       "You take 16% less durability loss when you die.",
+       "You take 24% less durability loss when you die.",
+       "You take 32% less durability loss when you die.",
+       "You take 40% less durability loss when you die."
+      ]
+     },
+     {
+      "id": 110314,
+      "name": "Diplomat",
+      "icon": "inv_scroll_03",
+      "max": 5,
+      "col": 1,
+      "row": 3,
+      "req": 5,
+      "locked": false,
+      "cast": null,
+      "cd": null,
+      "ranks": [
+       "Increases your reputation gains by 2%.",
+       "Increases your reputation gains by 4%.",
+       "Increases your reputation gains by 6%.",
+       "Increases your reputation gains by 8%.",
+       "Increases your reputation gains by 10%."
+      ]
+     }
+    ],
+    "edges": [
+     [
+      110313,
+      110316
+     ],
+     [
+      110315,
+      110309
+     ],
+     [
+      113513,
+      113512
+     ]
+    ]
+   }
+  ],
+  "sources": [
+   {
+    "tab": "Classes",
+    "rows": [
+     {
+      "name": "Novice Druid",
+      "desc": "Reach level 25 for the first time on a Druid."
+     },
+     {
+      "name": "Experienced Druid",
+      "desc": "Reach level 45 for the first time on a Druid."
+     },
+     {
+      "name": "Master Druid",
+      "desc": "Reach level 60 for the first time on a Druid."
+     },
+     {
+      "name": "Novice Hunter",
+      "desc": "Reach level 25 for the first time on a Hunter."
+     },
+     {
+      "name": "Experienced Hunter",
+      "desc": "Reach level 45 for the first time on a Hunter."
+     },
+     {
+      "name": "Master Hunter",
+      "desc": "Reach level 60 for the first time on a Hunter."
+     },
+     {
+      "name": "Novice Mage",
+      "desc": "Reach level 25 for the first time on a Mage."
+     },
+     {
+      "name": "Experienced Mage",
+      "desc": "Reach level 45 for the first time on a Mage."
+     },
+     {
+      "name": "Master Mage",
+      "desc": "Reach level 60 for the first time on a Mage."
+     },
+     {
+      "name": "Novice Paladin",
+      "desc": "Reach level 25 for the first time on a Paladin."
+     },
+     {
+      "name": "Experienced Paladin",
+      "desc": "Reach level 45 for the first time on a Paladin."
+     },
+     {
+      "name": "Master Paladin",
+      "desc": "Reach level 60 for the first time on a Paladin."
+     },
+     {
+      "name": "Novice Priest",
+      "desc": "Reach level 25 for the first time on a Priest."
+     },
+     {
+      "name": "Experienced Priest",
+      "desc": "Reach level 45 for the first time on a Priest."
+     },
+     {
+      "name": "Master Priest",
+      "desc": "Reach level 60 for the first time on a Priest."
+     },
+     {
+      "name": "Novice Rogue",
+      "desc": "Reach level 25 for the first time on a Rogue."
+     },
+     {
+      "name": "Experienced Rogue",
+      "desc": "Reach level 45 for the first time on a Rogue."
+     },
+     {
+      "name": "Master Rogue",
+      "desc": "Reach level 60 for the first time on a Rogue."
+     },
+     {
+      "name": "Novice Shaman",
+      "desc": "Reach level 25 for the first time on a Shaman."
+     },
+     {
+      "name": "Experienced Shaman",
+      "desc": "Reach level 45 for the first time on a Shaman."
+     },
+     {
+      "name": "Master Shaman",
+      "desc": "Reach level 60 for the first time on a Shaman."
+     },
+     {
+      "name": "Novice Warlock",
+      "desc": "Reach level 25 for the first time on a Warlock."
+     },
+     {
+      "name": "Experienced Warlock",
+      "desc": "Reach level 45 for the first time on a Warlock."
+     },
+     {
+      "name": "Master Warlock",
+      "desc": "Reach level 60 for the first time on a Warlock."
+     },
+     {
+      "name": "Novice Warrior",
+      "desc": "Reach level 25 for the first time on a Warrior."
+     },
+     {
+      "name": "Experienced Warrior",
+      "desc": "Reach level 45 for the first time on a Warrior."
+     },
+     {
+      "name": "Master Warrior",
+      "desc": "Reach level 60 for the first time on a Warrior."
+     }
+    ]
+   },
+   {
+    "tab": "Tradeskills",
+    "rows": [
+     {
+      "name": "Journeyman Alchemist",
+      "desc": "Reach 150 skill in Alchemy for the first time."
+     },
+     {
+      "name": "Expert Alchemist",
+      "desc": "Reach 225 skill in Alchemy for the first time."
+     },
+     {
+      "name": "Artisan Alchemist",
+      "desc": "Reach 300 skill in Alchemy for the first time."
+     },
+     {
+      "name": "Journeyman Blacksmith",
+      "desc": "Reach 150 skill in Blacksmithing for the first time."
+     },
+     {
+      "name": "Expert Blacksmith",
+      "desc": "Reach 225 skill in Blacksmithing for the first time."
+     },
+     {
+      "name": "Artisan Blacksmith",
+      "desc": "Reach 300 skill in Blacksmithing for the first time."
+     },
+     {
+      "name": "Journeyman Enchanter",
+      "desc": "Reach 150 skill in Enchanting for the first time."
+     },
+     {
+      "name": "Expert Enchanter",
+      "desc": "Reach 225 skill in Enchanting for the first time."
+     },
+     {
+      "name": "Artisan Enchanter",
+      "desc": "Reach 300 skill in Enchanting for the first time."
+     },
+     {
+      "name": "Journeyman Engineer",
+      "desc": "Reach 150 skill in Engineering for the first time."
+     },
+     {
+      "name": "Expert Engineer",
+      "desc": "Reach 225 skill in Engineering for the first time."
+     },
+     {
+      "name": "Artisan Engineer",
+      "desc": "Reach 300 skill in Engineering for the first time."
+     },
+     {
+      "name": "Journeyman Leatherworker",
+      "desc": "Reach 150 skill in Leatherworking for the first time."
+     },
+     {
+      "name": "Expert Leatherworker",
+      "desc": "Reach 225 skill in Leatherworking for the first time."
+     },
+     {
+      "name": "Artisan Leatherworker",
+      "desc": "Reach 300 skill in Leatherworking for the first time."
+     },
+     {
+      "name": "Journeyman Tailor",
+      "desc": "Reach 150 skill in Tailoring for the first time."
+     },
+     {
+      "name": "Expert Tailor",
+      "desc": "Reach 225 skill in Tailoring for the first time."
+     },
+     {
+      "name": "Artisan Tailor",
+      "desc": "Reach 300 skill in Tailoring for the first time."
+     }
+    ]
+   },
+   {
+    "tab": "Player vs. Player",
+    "rows": [
+     {
+      "name": "Rank 3",
+      "desc": "Reach the rank of Sergeant in the Player vs. Player Honor System."
+     },
+     {
+      "name": "Rank 7",
+      "desc": "Reach the rank of Knight-Lieutenant or Blood Guard in the Player vs. Player Honor System."
+     },
+     {
+      "name": "Rank 10",
+      "desc": "Reach the rank of Lieutenant Commander or Champion in the Player vs. Player Honor System."
+     },
+     {
+      "name": "Rank 13",
+      "desc": "Reach the rank of Field Marshal or Warlord in the Player vs. Player Honor System."
+     },
+     {
+      "name": "Rank 14",
+      "desc": "Reach the rank of Grand Marshal or High Warlord in the Player vs. Player Honor System."
+     },
+     {
+      "name": "Master of Alterac Valley",
+      "desc": "Reach exalted reputation with the Frostwolf Clan or Stormpike Guard."
+     },
+     {
+      "name": "Master of Arathi Basin",
+      "desc": "Reach exalted reputation with the Defilers or League of Arathor."
+     },
+     {
+      "name": "Master of Darkspear Islands",
+      "desc": "Reach exalted reputation with the Darkspear Raiders or Theramore Expeditionary Force."
+     },
+     {
+      "name": "Master of Warsong Gulch",
+      "desc": "Reach exalted reputation with the Warsong Outriders or Silverwing Sentinels."
+     },
+     {
+      "name": "Field of Honor: Week 4",
+      "desc": "Complete Week 4 of the Field of Honor Journey."
+     },
+     {
+      "name": "Field of Honor: Week 7",
+      "desc": "Complete Week 7 of the Field of Honor Journey."
+     },
+     {
+      "name": "Field of Honor: Week 10",
+      "desc": "Complete Week 10 of the Field of Honor Journey."
+     }
+    ]
+   },
+   {
+    "tab": "Adventure",
+    "rows": [
+     {
+      "name": "Novice Spelunker",
+      "desc": "Complete the following dungeons: Ragefire Chasm or Hall of Thanes, Wailing Caverns, Shadowfang Keep, Ruins of Lordaeron, The Deadmines, Excavation Site: Wetlands"
+     },
+     {
+      "name": "Experienced Spelunker",
+      "desc": "Complete the following dungeons: City of Dalaran, Gnomeregan, Scarlet Monastery: Graveyard, Scarlet Monastery: Armory, Razorfen Kraul, Blackfathom Deeps, The Drowned City, Scarlet Monastery: Library, Scarlet Monastery: Cathedral, Krol'dok Stronghold"
+     },
+     {
+      "name": "Master Spelunker",
+      "desc": "Complete the following dungeons: Razorfen Downs, Zul'Farrak, Alcaz Prison, Blackrock Depths, Lower Blackrock Spire, Scholomance, Stratholme: Dead, Dire Maul: North, The Shaper's Terrace, Uldaman, Maraudon, The Temple of Atal'Hakkar, Blackmaw Hold, Upper Blackrock Spire, Stratholme: Live, Dire Maul: East, Dire Maul: West"
+     },
+     {
+      "name": "Conqueror of the Deeps",
+      "desc": "Defeat the following encounters in the Barrow Deeps."
+     },
+     {
+      "name": "Conqueror of the Wilds",
+      "desc": "Defeat the following encounters in Hyjal Summit."
+     },
+     {
+      "name": "Conqueror of the Lair",
+      "desc": "Defeat Onyxia."
+     },
+     {
+      "name": "Explorer",
+      "desc": "Have a character with the Explore Azeroth achievement."
+     },
+     {
+      "name": "Lord Valthalak Laid to Rest",
+      "desc": "Complete the questline beginning with An Earnest Proposition, and ending with Saving the Best for Last."
+     }
+    ]
+   }
+  ]
  }
 }
