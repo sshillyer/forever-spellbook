@@ -612,6 +612,7 @@ function arrowsSVG(tr,b){const P=54,S=44;let h='';
     else{const y=sy+S/2,dir=t.col>src.col?1:-1,x1=dir>0?sx+S+1:sx-1,x=dx+S/2;d=`M${x1},${y} L${x},${y} L${x},${dy-6}`;ah=`M${x-5},${dy-7} L${x+5},${dy-7} L${x},${dy-1}Z`}
     h+=`<path class="${on}" d="${d}"/><path class="ah-${on}" d="${ah}"/>`}
   return h?`<svg class="arrows" viewBox="0 0 206 374" aria-hidden="true">${h}</svg>`:''}
+function talentSpell(t,r){const s=t.spells;if(!s||!s.length)return t.id;return s[Math.max(1,Math.min(s.length,r||1))-1]}
 function rankText(t,i){return t.ranks?t.ranks[Math.max(1,Math.min(t.max,i))-1]:t.desc}
 function renderTalents(b){
   const trees=D.classes[b.cls].trees;
@@ -703,7 +704,7 @@ function showTalentDetail(t,b){const r=b.talents[t.id]||0;const ab=TALENT_NAME[b
   const reqs=(t.req||[]).map(q=>{const id=Array.isArray(q)?q[0]:q.id;return TAL[b.cls][id]?.name}).filter(Boolean);
   $('#detail').innerHTML=`<div class="hd"><span class="tile ${t.active?'':'passive'}${icCls(t.icon)}" style="--rc:var(--r-${t.active?'buff':'passive'})">${icImg(t.icon)||esc(initials(t.name))}</span><div><h2>${esc(t.name)}</h2><div class="sub">${esc(t.tree)} · row ${t.row+1} · rank ${r}/${t.max}</div></div></div>
    <dl class="kv"><dt>Needs</dt><dd>${t.row*5} pts in ${esc(t.tree)}, level ${t.level}</dd>${reqs.length?`<dt>Requires</dt><dd>${esc(reqs.join(', '))}</dd>`:''}${ab?`<dt>Grants</dt><dd>${esc(ab)}</dd>`:''}</dl>
-   ${t.ranks?`<ol class="ranks">${t.ranks.map((x,i)=>`<li class="${i+1===r?'cur':''} ${i+1<r?'done':''}"><span>Rank ${i+1}</span>${hl(x)}</li>`).join('')}</ol>`:`<p class="desc">${hl(t.desc)}</p>`}<p style="margin-top:10px"><a href="https://www.wowhead.com/forever/spell=${t.id}" target="_blank" rel="noopener">Open on Wowhead ↗</a></p>`}
+   ${t.ranks?`<ol class="ranks">${t.ranks.map((x,i)=>`<li class="${i+1===r?'cur':''} ${i+1<r?'done':''}"><span>Rank ${i+1}</span>${hl(x)}</li>`).join('')}</ol>`:`<p class="desc">${hl(t.desc)}</p>`}<p style="margin-top:10px"><a href="https://www.wowhead.com/forever/spell=${talentSpell(t,r)}" target="_blank" rel="noopener">Open on Wowhead ↗</a></p>`}
 
 /* ---------- tooltip ---------- */
 const tip=$('#tip');
