@@ -23123,141 +23123,721 @@
    "6": "Tauren",
    "7": "Gnome",
    "8": "Troll",
-   "95": "Skyborne (Alliance)",
-   "96": "Skyborne (Horde)"
+   "95": "High Order Skyborne",
+   "96": "Windshaper Skyborne"
   },
   "faction": {
    "1": "A",
+   "2": "H",
    "3": "A",
    "4": "A",
-   "7": "A",
-   "95": "A",
-   "2": "H",
    "5": "H",
    "6": "H",
+   "7": "A",
    "8": "H",
+   "95": "A",
    "96": "H"
+  },
+  "classes": {
+   "1": [
+    "Warrior",
+    "Paladin",
+    "Hunter",
+    "Rogue",
+    "Priest",
+    "Mage",
+    "Warlock"
+   ],
+   "2": [
+    "Warrior",
+    "Hunter",
+    "Rogue",
+    "Shaman",
+    "Mage",
+    "Warlock"
+   ],
+   "3": [
+    "Warrior",
+    "Paladin",
+    "Hunter",
+    "Rogue",
+    "Priest",
+    "Shaman"
+   ],
+   "4": [
+    "Warrior",
+    "Hunter",
+    "Rogue",
+    "Priest",
+    "Druid"
+   ],
+   "5": [
+    "Warrior",
+    "Paladin",
+    "Rogue",
+    "Priest",
+    "Mage",
+    "Warlock"
+   ],
+   "6": [
+    "Warrior",
+    "Hunter",
+    "Shaman",
+    "Druid"
+   ],
+   "7": [
+    "Warrior",
+    "Rogue",
+    "Priest",
+    "Mage",
+    "Warlock"
+   ],
+   "8": [
+    "Warrior",
+    "Hunter",
+    "Rogue",
+    "Priest",
+    "Shaman",
+    "Mage",
+    "Warlock"
+   ],
+   "95": [
+    "Warrior",
+    "Hunter",
+    "Rogue",
+    "Mage",
+    "Druid"
+   ],
+   "96": [
+    "Warrior",
+    "Hunter",
+    "Rogue",
+    "Shaman",
+    "Druid"
+   ]
   },
   "byRace": {
    "1": [
-    20597,
-    20598,
-    20600,
-    1259718
+    "20597",
+    "20598",
+    "20600",
+    "1259718"
    ],
    "2": [
-    20572,
-    20573,
-    20574,
-    1299026
+    "20572",
+    "20573",
+    "20575",
+    "1299026"
    ],
    "3": [
-    2481,
-    20594,
-    1259719,
-    1259721
+    "2481",
+    "20594",
+    "1259721",
+    "dwarf-artisans-precision"
    ],
    "4": [
-    20580,
-    20582,
-    20585,
-    1259799
+    "20580",
+    "20582",
+    "20585",
+    "1259799"
    ],
    "5": [
-    5227,
-    7744,
-    20577,
-    1260189
+    "5227",
+    "7744",
+    "20577",
+    "1260189"
    ],
    "6": [
-    20549,
-    20550,
-    20552,
-    1259918
+    "20549",
+    "20550",
+    "20552",
+    "1259918"
    ],
    "7": [
-    20589,
-    20591,
-    20593,
-    1259821
+    "20589",
+    "20593",
+    "1259802",
+    "1259813"
    ],
    "8": [
-    20554,
-    20555,
-    20557,
-    1260270
+    "20554",
+    "20555",
+    "20557",
+    "1260270"
    ],
    "95": [
-    1259416,
-    1259705,
-    1259707,
-    1259710
+    "1259416",
+    "1259705",
+    "1259707",
+    "1259710"
    ],
    "96": [
-    1259416,
-    1259686,
-    1259707,
-    1259710
+    "1259416",
+    "1259686",
+    "1259707",
+    "1259710"
    ]
   },
-  "gnomeByClass": {
-   "Warrior": [
-    20589,
-    1259802,
-    20593,
-    1259813
-   ],
-   "Rogue": [
-    20589,
-    1259803,
-    20593,
-    1259812
-   ],
-   "Priest": [
-    20589,
-    20591,
-    20593,
-    1259823
-   ],
-   "Paladin": [
-    20589,
-    20591,
-    20593,
-    1259823
-   ],
-   "Shaman": [
-    20589,
-    20591,
-    20593,
-    1259823
-   ],
-   "Druid": [
-    20589,
-    20591,
-    20593,
-    1259823
-   ],
-   "Mage": [
-    20589,
-    20591,
-    20593,
-    1259817
-   ]
+  "byClass": {
+   "Warrior": {
+    "1": [
+     "20597",
+     "20598",
+     "20600",
+     "1259718"
+    ],
+    "2": [
+     "20572",
+     "20573",
+     "20575",
+     "1299026"
+    ],
+    "3": [
+     "2481",
+     "20594",
+     "1259721",
+     "dwarf-artisans-precision"
+    ],
+    "4": [
+     "20580",
+     "20582",
+     "20585",
+     "1259799"
+    ],
+    "5": [
+     "5227",
+     "7744",
+     "20577",
+     "1260189"
+    ],
+    "6": [
+     "20549",
+     "20550",
+     "20552",
+     "1259918"
+    ],
+    "7": [
+     "20589",
+     "20593",
+     "1259802",
+     "1259813"
+    ],
+    "8": [
+     "20554",
+     "20555",
+     "20557",
+     "1260270"
+    ],
+    "95": [
+     "1259416",
+     "1259705",
+     "1259707",
+     "1259710"
+    ],
+    "96": [
+     "1259416",
+     "1259686",
+     "1259707",
+     "1259710"
+    ]
+   },
+   "Paladin": {
+    "1": [
+     "20597",
+     "20598",
+     "20600",
+     "1259718"
+    ],
+    "2": [
+     "20572",
+     "20573",
+     "20575",
+     "1299026"
+    ],
+    "3": [
+     "2481",
+     "20594",
+     "1259721",
+     "dwarf-artisans-precision"
+    ],
+    "4": [
+     "20580",
+     "20582",
+     "20585",
+     "1259799"
+    ],
+    "5": [
+     "5227",
+     "7744",
+     "20577",
+     "1260189"
+    ],
+    "6": [
+     "20549",
+     "20550",
+     "20552",
+     "1259918"
+    ],
+    "7": [
+     "20589",
+     "20593"
+    ],
+    "8": [
+     "20554",
+     "20555",
+     "20557",
+     "1260270"
+    ],
+    "95": [
+     "1259416",
+     "1259705",
+     "1259707",
+     "1259710"
+    ],
+    "96": [
+     "1259416",
+     "1259686",
+     "1259707",
+     "1259710"
+    ]
+   },
+   "Hunter": {
+    "1": [
+     "20597",
+     "20598",
+     "20600",
+     "1259718"
+    ],
+    "2": [
+     "20572",
+     "20573",
+     "20575",
+     "1299026"
+    ],
+    "3": [
+     "2481",
+     "20594",
+     "1259721",
+     "dwarf-artisans-precision"
+    ],
+    "4": [
+     "20580",
+     "20582",
+     "20585",
+     "1259799"
+    ],
+    "5": [
+     "5227",
+     "7744",
+     "20577"
+    ],
+    "6": [
+     "20549",
+     "20550",
+     "20552",
+     "1259918"
+    ],
+    "7": [
+     "20589",
+     "20593"
+    ],
+    "8": [
+     "20554",
+     "20555",
+     "20557",
+     "1260270"
+    ],
+    "95": [
+     "1259416",
+     "1259705",
+     "1259707",
+     "1259710"
+    ],
+    "96": [
+     "1259416",
+     "1259686",
+     "1259707",
+     "1259710"
+    ]
+   },
+   "Rogue": {
+    "1": [
+     "20597",
+     "20598",
+     "20600",
+     "1259718"
+    ],
+    "2": [
+     "20572",
+     "20573",
+     "20575",
+     "1299026"
+    ],
+    "3": [
+     "2481",
+     "20594",
+     "1259721",
+     "dwarf-artisans-precision"
+    ],
+    "4": [
+     "20580",
+     "20582",
+     "20585",
+     "1259799"
+    ],
+    "5": [
+     "5227",
+     "7744",
+     "20577",
+     "1260189"
+    ],
+    "6": [
+     "20549",
+     "20550",
+     "20552",
+     "1259918"
+    ],
+    "7": [
+     "20589",
+     "20593",
+     "1259803",
+     "1259812"
+    ],
+    "8": [
+     "20554",
+     "20555",
+     "20557",
+     "1260270"
+    ],
+    "95": [
+     "1259416",
+     "1259705",
+     "1259707",
+     "1259710"
+    ],
+    "96": [
+     "1259416",
+     "1259686",
+     "1259707",
+     "1259710"
+    ]
+   },
+   "Priest": {
+    "1": [
+     "20597",
+     "20598",
+     "20600",
+     "1259718"
+    ],
+    "2": [
+     "20572",
+     "20573",
+     "20575",
+     "1299026"
+    ],
+    "3": [
+     "2481",
+     "20594",
+     "1259721",
+     "dwarf-artisans-precision"
+    ],
+    "4": [
+     "20580",
+     "20582",
+     "20585",
+     "1259799"
+    ],
+    "5": [
+     "5227",
+     "7744",
+     "20577",
+     "1260201"
+    ],
+    "6": [
+     "20549",
+     "20550",
+     "20552",
+     "1259918"
+    ],
+    "7": [
+     "20589",
+     "20591",
+     "20593",
+     "1259823"
+    ],
+    "8": [
+     "20554",
+     "20555",
+     "20557",
+     "1260270"
+    ],
+    "95": [
+     "1259416",
+     "1259705",
+     "1259707",
+     "1259710"
+    ],
+    "96": [
+     "1259416",
+     "1259686",
+     "1259707",
+     "1259710"
+    ]
+   },
+   "Shaman": {
+    "1": [
+     "20597",
+     "20598",
+     "20600",
+     "1259718"
+    ],
+    "2": [
+     "20572",
+     "20573",
+     "20575",
+     "1299026"
+    ],
+    "3": [
+     "2481",
+     "20594",
+     "1259721",
+     "dwarf-artisans-precision"
+    ],
+    "4": [
+     "20580",
+     "20582",
+     "20585",
+     "1259799"
+    ],
+    "5": [
+     "5227",
+     "7744",
+     "20577"
+    ],
+    "6": [
+     "20549",
+     "20550",
+     "20552",
+     "1259918"
+    ],
+    "7": [
+     "20589",
+     "20593"
+    ],
+    "8": [
+     "20554",
+     "20555",
+     "20557",
+     "1260270"
+    ],
+    "95": [
+     "1259416",
+     "1259705",
+     "1259707",
+     "1259710"
+    ],
+    "96": [
+     "1259416",
+     "1259686",
+     "1259707",
+     "1259710"
+    ]
+   },
+   "Mage": {
+    "1": [
+     "20597",
+     "20598",
+     "20600",
+     "1259718"
+    ],
+    "2": [
+     "20572",
+     "20573",
+     "20575",
+     "1299026"
+    ],
+    "3": [
+     "2481",
+     "20594",
+     "1259721",
+     "dwarf-artisans-precision"
+    ],
+    "4": [
+     "20580",
+     "20582",
+     "20585",
+     "1259799"
+    ],
+    "5": [
+     "5227",
+     "7744",
+     "20577",
+     "1260201"
+    ],
+    "6": [
+     "20549",
+     "20550",
+     "20552",
+     "1259918"
+    ],
+    "7": [
+     "20589",
+     "20591",
+     "20593",
+     "1259817"
+    ],
+    "8": [
+     "20554",
+     "20555",
+     "20557",
+     "1260270"
+    ],
+    "95": [
+     "1259416",
+     "1259705",
+     "1259707",
+     "1259710"
+    ],
+    "96": [
+     "1259416",
+     "1259686",
+     "1259707",
+     "1259710"
+    ]
+   },
+   "Warlock": {
+    "1": [
+     "20597",
+     "20598",
+     "20600",
+     "1259718"
+    ],
+    "2": [
+     "20572",
+     "20573",
+     "20575",
+     "1299026"
+    ],
+    "3": [
+     "2481",
+     "20594",
+     "1259721",
+     "dwarf-artisans-precision"
+    ],
+    "4": [
+     "20580",
+     "20582",
+     "20585",
+     "1259799"
+    ],
+    "5": [
+     "5227",
+     "7744",
+     "20577",
+     "1260201"
+    ],
+    "6": [
+     "20549",
+     "20550",
+     "20552",
+     "1259918"
+    ],
+    "7": [
+     "20589",
+     "20591",
+     "20593",
+     "1259821"
+    ],
+    "8": [
+     "20554",
+     "20555",
+     "20557",
+     "1260270"
+    ],
+    "95": [
+     "1259416",
+     "1259705",
+     "1259707",
+     "1259710"
+    ],
+    "96": [
+     "1259416",
+     "1259686",
+     "1259707",
+     "1259710"
+    ]
+   },
+   "Druid": {
+    "1": [
+     "20597",
+     "20598",
+     "20600",
+     "1259718"
+    ],
+    "2": [
+     "20572",
+     "20573",
+     "20575",
+     "1299026"
+    ],
+    "3": [
+     "2481",
+     "20594",
+     "1259721",
+     "dwarf-artisans-precision"
+    ],
+    "4": [
+     "20580",
+     "20582",
+     "20585",
+     "1259799"
+    ],
+    "5": [
+     "5227",
+     "7744",
+     "20577"
+    ],
+    "6": [
+     "20549",
+     "20550",
+     "20552",
+     "1259918"
+    ],
+    "7": [
+     "20589",
+     "20593"
+    ],
+    "8": [
+     "20554",
+     "20555",
+     "20557",
+     "1260270"
+    ],
+    "95": [
+     "1259416",
+     "1259705",
+     "1259707",
+     "1259710"
+    ],
+    "96": [
+     "1259416",
+     "1259686",
+     "1259707",
+     "1259710"
+    ]
+   }
   },
   "spells": {
    "2481": {
     "n": "Find Treasure",
     "i": "racial_dwarf_findtreasure",
     "d": "Allows the dwarf to sense nearby treasure, making it appear on the minimap. Lasts until canceled.",
-    "cd": null,
     "ct": "Instant"
    },
    "5227": {
     "n": "Underwater Breathing",
     "i": "spell_shadow_demonbreath",
-    "d": "Underwater breath lasts 300% longer than normal.",
-    "cd": null,
-    "ct": null
+    "d": "Underwater breath lasts 300% longer than normal."
    },
    "7744": {
     "n": "Will of the Forsaken",
@@ -23276,15 +23856,13 @@
    "20550": {
     "n": "Endurance",
     "i": "spell_nature_unyeildingstamina",
-    "d": "Total Health increased by 5% and critical strike bonus to damage and healing increased by 2%.",
-    "cd": null,
-    "ct": null
+    "d": "Total Health increased by 5%.",
+    "tuned": 1
    },
    "20552": {
     "n": "Cultivation",
     "i": "inv_misc_flower_01",
     "d": "Cultivate a nearby herb, growing a duplicate you can harvest without requiring Herbalism skill. Each herb may only be cultivated once.",
-    "cd": null,
     "ct": "Instant"
    },
    "20554": {
@@ -23297,16 +23875,12 @@
    "20555": {
     "n": "Regeneration",
     "i": "spell_nature_regenerate",
-    "d": "Health regeneration rate increased by 20%. In addition, 20% of total Health regeneration will continue during combat.",
-    "cd": null,
-    "ct": null
+    "d": "Health regeneration rate increased by 20%. In addition, 20% of total Health regeneration will continue during combat."
    },
    "20557": {
     "n": "Beast Slaying",
     "i": "inv_misc_pelt_bear_ruin_02",
-    "d": "Damage dealt versus Beasts increased by 5%.",
-    "cd": null,
-    "ct": null
+    "d": "Damage dealt versus Beasts increased by 5%."
    },
    "20572": {
     "n": "Blood Fury",
@@ -23318,16 +23892,7 @@
    "20573": {
     "n": "Hardiness",
     "i": "inv_helmet_23",
-    "d": "Duration of Stun effects on you reduced by 20%.",
-    "cd": null,
-    "ct": null
-   },
-   "20574": {
-    "n": "Savage",
-    "i": "inv_axe_02",
-    "d": "Increases your critical strike chance with all spells and abilities by 1%.",
-    "cd": null,
-    "ct": null
+    "d": "Duration of Stun effects on you reduced by 20%."
    },
    "20577": {
     "n": "Cannibalize",
@@ -23346,16 +23911,12 @@
    "20582": {
     "n": "Quickness",
     "i": "ability_racial_shadowmeld",
-    "d": "Dodge chance increased by 1% and movement speed increased by 2%. Night Elf Rogues and Druids are harder to detect in Stealth as if they were 1 level higher.",
-    "cd": null,
-    "ct": null
+    "d": "Dodge chance increased by 1% and movement speed increased by 2%. Night Elf Rogues and Druids are harder to detect in Stealth as if they were 1 level higher."
    },
    "20585": {
     "n": "Wisp Spirit",
     "i": "spell_nature_wispsplode",
-    "d": "Transform into a wisp upon death, increasing movement speed by 75%.",
-    "cd": null,
-    "ct": null
+    "d": "Transform into a wisp upon death, increasing movement speed by 75%."
    },
    "20589": {
     "n": "Escape Artist",
@@ -23367,16 +23928,12 @@
    "20591": {
     "n": "Expansive Mind",
     "i": "inv_enchant_essenceeternallarge",
-    "d": "Maximum Mana increased by 5%.",
-    "cd": null,
-    "ct": null
+    "d": "Maximum Mana increased by 5%."
    },
    "20593": {
     "n": "Engineering Specialization",
     "i": "inv_misc_gear_01",
-    "d": "Your gnomish ingenuity reduces the rate of engineering devices failing or backfiring when you use them by 20%.",
-    "cd": null,
-    "ct": null
+    "d": "Your gnomish ingenuity reduces the rate of engineering devices failing or backfiring when you use them by 20%."
    },
    "20594": {
     "n": "Stoneform",
@@ -23388,16 +23945,14 @@
    "20597": {
     "n": "Ruthless",
     "i": "ability_rogue_eviscerate",
-    "d": "Increases your critical strike chance with all spells and attacks by 2%.",
-    "cd": null,
-    "ct": null
+    "d": "Increases your critical strike chance with all spells and attacks by 1%.",
+    "tuned": 1
    },
    "20598": {
     "n": "The Human Spirit",
     "i": "inv_enchant_shardbrilliantsmall",
-    "d": "Spirit increased by 5%.",
-    "cd": null,
-    "ct": null
+    "d": "Spirit increased by 10%.",
+    "tuned": 1
    },
    "20600": {
     "n": "Perception",
@@ -23416,30 +23971,29 @@
    "1259686": {
     "n": "Skysight",
     "i": "ability_skyreach_lens_flare",
-    "d": "Attempt to draw power from a convergence of elements and receive its blessing, increasing your movement and mounted movement speeds by 10%. Lasts 30 sec if no elemental convergence is nearby, and 15 min if one is found.",
+    "d": "Increases your movement speed by 15% for 15 sec. Using it at an elemental convergence grants Charged for 1 hour, raising the bonus to 30%. Charged persists through death.",
     "cd": "2 min cooldown",
-    "ct": "0.5 sec cast"
+    "ct": "0.5 sec cast",
+    "tuned": 1
    },
    "1259705": {
     "n": "Read Leyline",
     "i": "ability_mage_incantersabsorbtion",
-    "d": "Attempt to tap into the power of a nearby leyline, increasing your Health and Mana regeneration by 100%. Lasts 30 sec if no leyline is nearby, and 15 min if one is found.",
+    "d": "Increases your Health and Mana regeneration by 50% for 15 sec. Cannot be used while Innervate is active. Using it at a Ley Line grants Attuned for 1 hour, raising the bonus to 100%. Attuned persists through death.",
     "cd": "2 min cooldown",
-    "ct": "2 sec cast"
+    "ct": "2 sec cast",
+    "tuned": 1
    },
    "1259707": {
     "n": "Elemental Insight",
     "i": "achievement_raidprimalist_windelemental",
-    "d": "Damage dealt versus Elementals increased by 5%.",
-    "cd": null,
-    "ct": null
+    "d": "Damage dealt versus Elementals increased by 5%."
    },
    "1259710": {
     "n": "Wind Blessed",
     "i": "inv_misc_volatileair",
-    "d": "Increases your spellcasting, melee, and ranged Haste by 3%.",
-    "cd": null,
-    "ct": null
+    "d": "Increases your spellcasting, melee, and ranged Haste by 2%.",
+    "tuned": 1
    },
    "1259718": {
     "n": "Will to Survive",
@@ -23448,19 +24002,10 @@
     "cd": "3 min cooldown",
     "ct": "Instant"
    },
-   "1259719": {
-    "n": "Earth Fury",
-    "i": "spell_shaman_unleashweapon_earth",
-    "d": "Increases your critical strike bonus to damage and healing by 2%.",
-    "cd": null,
-    "ct": null
-   },
    "1259721": {
     "n": "Big Game Hunter",
     "i": "inv_weapon_rifle_05",
-    "d": "Damage dealt versus Beasts increased by 5%.",
-    "cd": null,
-    "ct": null
+    "d": "Damage dealt versus Beasts increased by 5%."
    },
    "1259799": {
     "n": "Elune's Light",
@@ -23472,65 +24017,63 @@
    "1259802": {
     "n": "Expansive Mind",
     "i": "inv_enchant_essenceeternallarge",
-    "d": "Maximum Rage increased by 5%.",
-    "cd": null,
-    "ct": null
+    "d": "Maximum Rage increased by 5%."
    },
    "1259803": {
     "n": "Expansive Mind",
     "i": "inv_enchant_essenceeternallarge",
-    "d": "Maximum Energy increased by 5%.",
-    "cd": null,
-    "ct": null
+    "d": "Maximum Energy increased by 5%."
    },
    "1259812": {
     "n": "Eureka!",
     "i": "inv_gnometoy",
-    "d": "Your non-periodic damaging abilities have their Energy cost reduced by 10% and deal 10% more damage.",
+    "d": "Your non-periodic damaging abilities have their Energy cost reduced by 10% and deal 10% more damage for 8 sec.",
     "cd": "2 min cooldown",
     "ct": "Instant"
    },
    "1259813": {
     "n": "Eureka!",
     "i": "inv_gnometoy",
-    "d": "Your non-periodic damaging abilities have their Rage cost reduced by 10% and deal 10% more damage.",
+    "d": "Your non-periodic damaging abilities have their Rage cost reduced by 10% and deal 10% more damage for 8 sec.",
     "cd": "2 min cooldown",
     "ct": "Instant"
    },
    "1259817": {
     "n": "Eureka!",
     "i": "inv_gnometoy",
-    "d": "Your damaging abilities have their Mana cost reduced by 10% and deal 10% more damage.",
+    "d": "Your damaging abilities have their Mana cost reduced by 10% and deal 10% more damage for 8 sec.",
     "cd": "2 min cooldown",
     "ct": "Instant"
    },
    "1259821": {
     "n": "Eureka!",
     "i": "inv_gnometoy",
-    "d": "Your non-periodic damaging abilities have their Mana cost reduced by 10% and deal 10% more damage.",
+    "d": "Your non-periodic damaging abilities have their Mana cost reduced by 10% and deal 10% more damage for 8 sec.",
     "cd": "2 min cooldown",
     "ct": "Instant"
    },
    "1259823": {
     "n": "Eureka!",
     "i": "inv_gnometoy",
-    "d": "Your non-periodic damaging or healing abilities have their Mana cost reduced by 10% and deal 10% more damage or healing.",
+    "d": "Your non-periodic damaging or healing abilities have their Mana cost reduced by 10% and deal 10% more damage or healing for 8 sec.",
     "cd": "2 min cooldown",
     "ct": "Instant"
    },
    "1259918": {
     "n": "Plainsrunning",
     "i": "achievement_zone_barrens_01",
-    "d": "Gain 1% increased movement speed every 5 sec spent moving, up to a maximum of 30% increase. Taking damage or standing still will reduce this effect. In addition, you move 3% faster while mounted.",
-    "cd": null,
-    "ct": null
+    "d": "Gain 2% increased movement speed every 5 sec spent moving, up to a maximum of 60% increase. Taking damage or standing still will reduce this effect. Does not affect mounted speed.",
+    "tuned": 1
    },
    "1260189": {
     "n": "Touch of the Grave",
     "i": "spell_shadow_fingerofdeath",
-    "d": "Your spells and attacks have a 20% chance to drain Health from the target, up to 5% of your maximum Health.",
-    "cd": null,
-    "ct": null
+    "d": "Your spells and attacks have a 20% chance to drain Health from the target, up to 5% of your maximum Health."
+   },
+   "1260201": {
+    "n": "Touch of the Grave",
+    "i": "spell_shadow_fingerofdeath",
+    "d": "Your spells and attacks have a 30% chance to drain Health from the target, up to 5% of your maximum Health."
    },
    "1260270": {
     "n": "Rapid Regeneration",
@@ -23546,579 +24089,27 @@
     "cd": "3 min cooldown",
     "ct": "Instant"
    },
-   "1260201": {
-    "n": "Touch of the Grave",
-    "i": "spell_shadow_fingerofdeath",
-    "d": "Your spells and attacks have a 30% chance to drain Health from the target, up to 5% of your maximum Health.",
-    "cd": null,
-    "ct": null
+   "dwarf-artisans-precision": {
+    "n": "Artisan's Precision",
+    "i": "ability_marksmanship",
+    "d": "Increases hit chance with spells and attacks by 1%.",
+    "tuned": 1
+   },
+   "20575": {
+    "n": "Command",
+    "i": "ability_warrior_warcry",
+    "d": "Damage dealt by Warlock and Hunter pets increased by 5%.",
+    "tuned": 1
    }
   },
-  "byClass": {
-   "Warrior": {
-    "1": [
-     20600,
-     20597,
-     20598,
-     1259718
-    ],
-    "2": [
-     20572,
-     20573,
-     20574,
-     1299026
-    ],
-    "3": [
-     1259721,
-     1259719,
-     2481,
-     20594
-    ],
-    "4": [
-     1259799,
-     20582,
-     20580,
-     20585
-    ],
-    "5": [
-     20577,
-     1260189,
-     5227,
-     7744
-    ],
-    "6": [
-     20552,
-     20550,
-     1259918,
-     20549
-    ],
-    "7": [
-     20593,
-     20589,
-     1259813,
-     1259802
-    ],
-    "8": [
-     20557,
-     20554,
-     1260270,
-     20555
-    ],
-    "95": [
-     1259707,
-     1259705,
-     1259416,
-     1259710
-    ],
-    "96": [
-     1259707,
-     1259686,
-     1259416,
-     1259710
-    ]
-   },
-   "Paladin": {
-    "1": [
-     20600,
-     20597,
-     20598,
-     1259718
-    ],
-    "2": [
-     20572,
-     20573,
-     20574,
-     1299026
-    ],
-    "3": [
-     1259721,
-     1259719,
-     2481,
-     20594
-    ],
-    "4": [
-     1259799,
-     20582,
-     20580,
-     20585
-    ],
-    "5": [
-     20577,
-     1260189,
-     5227,
-     7744
-    ],
-    "6": [
-     20552,
-     20550,
-     1259918,
-     20549
-    ],
-    "7": [
-     20593,
-     20589,
-     1259823,
-     20591
-    ],
-    "8": [
-     20557,
-     20554,
-     1260270,
-     20555
-    ],
-    "95": [
-     1259707,
-     1259705,
-     1259416,
-     1259710
-    ],
-    "96": [
-     1259707,
-     1259686,
-     1259416,
-     1259710
-    ]
-   },
-   "Hunter": {
-    "1": [
-     20600,
-     20597,
-     20598,
-     1259718
-    ],
-    "2": [
-     20572,
-     20573,
-     20574,
-     1299026
-    ],
-    "3": [
-     1259721,
-     1259719,
-     2481,
-     20594
-    ],
-    "4": [
-     1259799,
-     20582,
-     20580,
-     20585
-    ],
-    "5": [
-     20577,
-     1260189,
-     5227,
-     7744
-    ],
-    "6": [
-     20552,
-     20550,
-     1259918,
-     20549
-    ],
-    "7": [
-     20593,
-     20589,
-     1259821,
-     20591
-    ],
-    "8": [
-     20557,
-     20554,
-     1260270,
-     20555
-    ],
-    "95": [
-     1259707,
-     1259705,
-     1259416,
-     1259710
-    ],
-    "96": [
-     1259707,
-     1259686,
-     1259416,
-     1259710
-    ]
-   },
-   "Rogue": {
-    "1": [
-     20600,
-     20597,
-     20598,
-     1259718
-    ],
-    "2": [
-     20572,
-     20573,
-     20574,
-     1299026
-    ],
-    "3": [
-     1259721,
-     1259719,
-     2481,
-     20594
-    ],
-    "4": [
-     1259799,
-     20582,
-     20580,
-     20585
-    ],
-    "5": [
-     20577,
-     1260189,
-     5227,
-     7744
-    ],
-    "6": [
-     20552,
-     20550,
-     1259918,
-     20549
-    ],
-    "7": [
-     20593,
-     20589,
-     1259812,
-     1259803
-    ],
-    "8": [
-     20557,
-     20554,
-     1260270,
-     20555
-    ],
-    "95": [
-     1259707,
-     1259705,
-     1259416,
-     1259710
-    ],
-    "96": [
-     1259707,
-     1259686,
-     1259416,
-     1259710
-    ]
-   },
-   "Priest": {
-    "1": [
-     20600,
-     20597,
-     20598,
-     1259718
-    ],
-    "2": [
-     20572,
-     20573,
-     20574,
-     1299026
-    ],
-    "3": [
-     1259721,
-     1259719,
-     2481,
-     20594
-    ],
-    "4": [
-     1259799,
-     20582,
-     20580,
-     20585
-    ],
-    "5": [
-     20577,
-     1260201,
-     5227,
-     7744
-    ],
-    "6": [
-     20552,
-     20550,
-     1259918,
-     20549
-    ],
-    "7": [
-     20593,
-     20589,
-     1259823,
-     20591
-    ],
-    "8": [
-     20557,
-     20554,
-     1260270,
-     20555
-    ],
-    "95": [
-     1259707,
-     1259705,
-     1259416,
-     1259710
-    ],
-    "96": [
-     1259707,
-     1259686,
-     1259416,
-     1259710
-    ]
-   },
-   "Shaman": {
-    "1": [
-     20600,
-     20597,
-     20598,
-     1259718
-    ],
-    "2": [
-     20572,
-     20573,
-     20574,
-     1299026
-    ],
-    "3": [
-     1259721,
-     1259719,
-     2481,
-     20594
-    ],
-    "4": [
-     1259799,
-     20582,
-     20580,
-     20585
-    ],
-    "5": [
-     20577,
-     1260189,
-     5227,
-     7744
-    ],
-    "6": [
-     20552,
-     20550,
-     1259918,
-     20549
-    ],
-    "7": [
-     20593,
-     20589,
-     1259823,
-     20591
-    ],
-    "8": [
-     20557,
-     20554,
-     1260270,
-     20555
-    ],
-    "95": [
-     1259707,
-     1259705,
-     1259416,
-     1259710
-    ],
-    "96": [
-     1259707,
-     1259686,
-     1259416,
-     1259710
-    ]
-   },
-   "Mage": {
-    "1": [
-     20600,
-     20597,
-     20598,
-     1259718
-    ],
-    "2": [
-     20572,
-     20573,
-     20574,
-     1299026
-    ],
-    "3": [
-     1259721,
-     1259719,
-     2481,
-     20594
-    ],
-    "4": [
-     1259799,
-     20582,
-     20580,
-     20585
-    ],
-    "5": [
-     20577,
-     1260201,
-     5227,
-     7744
-    ],
-    "6": [
-     20552,
-     20550,
-     1259918,
-     20549
-    ],
-    "7": [
-     20593,
-     20589,
-     1259817,
-     20591
-    ],
-    "8": [
-     20557,
-     20554,
-     1260270,
-     20555
-    ],
-    "95": [
-     1259707,
-     1259705,
-     1259416,
-     1259710
-    ],
-    "96": [
-     1259707,
-     1259686,
-     1259416,
-     1259710
-    ]
-   },
-   "Warlock": {
-    "1": [
-     20600,
-     20597,
-     20598,
-     1259718
-    ],
-    "2": [
-     20572,
-     20573,
-     20574,
-     1299026
-    ],
-    "3": [
-     1259721,
-     1259719,
-     2481,
-     20594
-    ],
-    "4": [
-     1259799,
-     20582,
-     20580,
-     20585
-    ],
-    "5": [
-     20577,
-     1260201,
-     5227,
-     7744
-    ],
-    "6": [
-     20552,
-     20550,
-     1259918,
-     20549
-    ],
-    "7": [
-     20593,
-     20589,
-     1259821,
-     20591
-    ],
-    "8": [
-     20557,
-     20554,
-     1260270,
-     20555
-    ],
-    "95": [
-     1259707,
-     1259705,
-     1259416,
-     1259710
-    ],
-    "96": [
-     1259707,
-     1259686,
-     1259416,
-     1259710
-    ]
-   },
-   "Druid": {
-    "1": [
-     20600,
-     20597,
-     20598,
-     1259718
-    ],
-    "2": [
-     20572,
-     20573,
-     20574,
-     1299026
-    ],
-    "3": [
-     1259721,
-     1259719,
-     2481,
-     20594
-    ],
-    "4": [
-     1259799,
-     20582,
-     20580,
-     20585
-    ],
-    "5": [
-     20577,
-     1260189,
-     5227,
-     7744
-    ],
-    "6": [
-     20552,
-     20550,
-     1259918,
-     20549
-    ],
-    "7": [
-     20593,
-     20589,
-     1259823,
-     20591
-    ],
-    "8": [
-     20557,
-     20554,
-     1260270,
-     20555
-    ],
-    "95": [
-     1259707,
-     1259705,
-     1259416,
-     1259710
-    ],
-    "96": [
-     1259707,
-     1259686,
-     1259416,
-     1259710
-    ]
-   }
-  }
+  "pulled": "2026-10-27",
+  "tuning": "https://www.wowhead.com/forever/news/racial-ability-tuning-pass-for-wow-forever-383597"
  },
  "meta": {
   "source": "Wowhead WoW Forever (talent calculator data + spell tooltips)",
   "pulled": "2026-10-23",
-  "note": "Beta data; Blizzard is still tuning. Rank 1 of talent spells comes from the talent."
+  "note": "Beta data; Blizzard is still tuning. Rank 1 of talent spells comes from the talent.",
+  "racialsPulled": "2026-10-27"
  },
  "legacy": {
   "cap": 16,

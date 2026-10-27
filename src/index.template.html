@@ -341,7 +341,8 @@ for(const c of CLASSES){TAL[c]={};D.classes[c].trees.forEach((t,ti)=>t.talents.f
 const TALENT_NAME={}; for(const c of CLASSES){TALENT_NAME[c]={};for(const a of D.classes[c].abilities) if(a.talent) TALENT_NAME[c][a.talent]=a.name}
 const RACES=D.racials.races;
 const DEFAULT_RACE={Hunter:'4',Warlock:'5',Paladin:'3',Shaman:'2',Druid:'4',Warrior:'1',Rogue:'1',Priest:'1',Mage:'1'};
-function racialIds(race,cls){const bc=D.racials.byClass&&D.racials.byClass[cls];if(bc&&bc[race])return bc[race];if(race==='7'&&D.racials.gnomeByClass[cls]) return D.racials.gnomeByClass[cls]; return D.racials.byRace[race]||[]}
+function racialIds(race,cls){const bc=D.racials.byClass&&D.racials.byClass[cls];if(bc&&bc[race])return bc[race];return D.racials.byRace[race]||[]}
+function canPlay(race,cls){const c=D.racials.classes&&D.racials.classes[race];return !c||c.includes(cls)}
 
 /* ---------- state ---------- */
 const SETTINGS_V=3;
@@ -494,7 +495,7 @@ function fillTree(b,ti){const tr=D.classes[b.cls].trees[ti];
 
 /* ---------- spellbook ---------- */
 function racialItems(b){return racialIds(b.race,b.cls).map(id=>{const s=D.racials.spells[id];if(!s)return null;const passive=!s.ct;
-  return {key:'r:'+id,name:s.n,icon:s.i,desc:s.d,cd:s.cd,cast:s.ct,passive,spellId:+id,roles:passive?['passive']:(RACIAL_ROLES[id]||['racial']),isRacial:true,rank:1,maxRank:1,learn:1}}).filter(Boolean)}
+  return {key:'r:'+id,name:s.n,icon:s.i,desc:s.d,cd:s.cd,cast:s.ct,passive,spellId:+id,tuned:s.tuned,roles:passive?['passive']:(RACIAL_ROLES[id]||['racial']),isRacial:true,rank:1,maxRank:1,learn:1}}).filter(Boolean)}
 function itemFromAbility(a,b){const lv=b.level;const have=a.levels.filter(l=>l<=lv).length;let known=false,why='',rank=0;
   if(a.talent){const t=TAL[b.cls][a.talent];const tr=b.talents[a.talent]||0;
     known=tr>0&&lv>=(t?.level||10);rank=Math.max(have,1);why=t?`Talent: ${t.tree} row ${t.row+1}`:'Talent';
@@ -530,7 +531,7 @@ function renderCharbar(b){
   $('#charbar').innerHTML=`
    <label class="field">Character / build<select id="selBuild">${builds.map(x=>`<option value="${x.id}" ${x.id===b.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></label>
    <label class="field">Name<input type="text" id="bName" value="${esc(b.name)}" size="16"></label>
-   <label class="field">Race<select id="bRace">${Object.entries(RACES).map(([id,n])=>`<option value="${id}" ${id===b.race?'selected':''}>${n} (${D.racials.faction[id]==='A'?'Alliance':'Horde'})</option>`).join('')}</select></label>
+   <label class="field">Race<select id="bRace">${Object.entries(RACES).filter(([id])=>id===b.race||canPlay(id,b.cls)).map(([id,n])=>`<option value="${id}" ${id===b.race?'selected':''}>${n} (${D.racials.faction[id]==='A'?'Alliance':'Horde'})${canPlay(id,b.cls)?'':' – not playable'}</option>`).join('')}</select></label>
    <div class="field">Level<div class="lvl"><button class="btn small lvbtn" id="lvlDn" title="Level down (Shift: −5)" aria-label="Level down">−</button><input type="range" min="1" max="60" id="bLvl" value="${b.level}" aria-label="Level slider"><button class="btn small lvbtn" id="lvlUp" title="Level up (Shift: +5)" aria-label="Level up">+</button><input type="number" min="1" max="60" id="lvlNum" value="${b.level}" aria-label="Level"></div></div>
    <div class="field">Talent points<span class="pts ${sp>bu?'over':''}">${sp} / ${bu}${sp>bu?' · over budget':''}</span></div>
    <span class="spacer"></span>
@@ -669,7 +670,7 @@ function showDetail(key,b){const it=findItem(key,b);if(!it)return;
    ['Learned',it.isRacial?'Racial':it.talent?it.why:(it.levels||[]).join(', ')],['Roles',(it.roles||[]).map(r=>ROLE_LABEL[r]||r).join(', ')]].filter(r=>r[1]);
   $('#detail').innerHTML=`<div class="hd">${tileHTML(it)}<div><h2>${esc(it.name)}</h2><div class="sub">${it.known===false?'Not in spellbook yet':'In spellbook'}${it.racial?' · race-specific':''}</div></div></div>
    <dl class="kv">${rows.map(r=>`<dt>${r[0]}</dt><dd>${esc(r[1])}</dd>`).join('')}</dl>
-   <p class="desc">${esc(it.desc||'')}</p>
+   <p class="desc">${esc(it.desc||'')}</p>${it.tuned?`<p class="desc" style="opacity:.75;font-size:12px">Updated for the launch racial tuning pass (<a href="${D.racials.tuning}" target="_blank" rel="noopener">Wowhead news</a>).</p>`:''}
    ${it.changes&&it.changes.length?`<ul class="changes">${it.changes.map(c=>`<li>${esc(CHANGE_TEXT[c]||c)}</li>`).join('')}</ul>`:''}
    ${it.spellId?`<p style="margin-top:10px"><a href="https://www.wowhead.com/forever/spell=${it.spellId}" target="_blank" rel="noopener">Open on Wowhead ↗</a></p>`:''}`;
 }

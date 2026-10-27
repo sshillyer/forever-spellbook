@@ -8,7 +8,7 @@ Pick a class, race, level and talents to see exactly what's in your spellbook, t
 
 ## Features
 
-- All nine classes: trainer abilities, talents and racials, with full tooltips and Wowhead links
+- All nine classes: trainer abilities, talents and racials, with full tooltips and Wowhead links. Racials follow the Wowhead race pages plus the launch racial tuning pass, and the race picker only lists races that can play the class
 - Talent calculator with per-rank tooltips ("Next rank"), prerequisite arrows, a Fill helper, text search and per-class tags (Crit, Pet, Traps, Curses…)
 - Spellbook view for any level and talent build, plus an All abilities list with role filters
 - **Legacy** tab: the three Legacy trees (Professions, Adventure, Resourcefulness) with per-rank tooltips and Wowhead's rules (tree point gates, prerequisites, 16-point spend cap). Legacy picks are per build, and the points you've earned are tracked once for the whole account with a checklist of every source (classes, tradeskills, PvP, adventure). Taking **Talented** moves your first talent point earlier, still capped at 51.
