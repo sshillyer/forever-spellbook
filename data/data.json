@@ -23981,7 +23981,7 @@
    "1259705": {
     "n": "Read Leyline",
     "i": "ability_mage_incantersabsorbtion",
-    "d": "Increases your Health and Mana regeneration by 50% for 15 sec. Cannot be used while Innervate is active. Using it at a Ley Line grants Attuned for 1 hour, raising the bonus to 100%. Attuned persists through death and is removed on entering a raid.",
+    "d": "Increases your Health and Mana regeneration by 50% for 15 sec. Cannot be used while Innervate is active, and Innervate replaces it as the stronger effect. Using it at a Ley Line grants Attuned for 1 hour, raising the bonus to 100%. Attuned persists through death and is removed on entering a raid.",
     "cd": "2 min cooldown",
     "ct": "2 sec cast",
     "tuned": 1

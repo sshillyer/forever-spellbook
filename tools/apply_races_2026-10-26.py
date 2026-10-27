@@ -30,7 +30,7 @@ OVERLAY = {
     '20574': None,
     # Skyborne
     '1259710': {'d': 'Increases your spellcasting, melee, and ranged Haste by 2%.'},
-    '1259705': {'d': 'Increases your Health and Mana regeneration by 50% for 15 sec. Cannot be used while Innervate is active. '
+    '1259705': {'d': 'Increases your Health and Mana regeneration by 50% for 15 sec. Cannot be used while Innervate is active, and Innervate replaces it as the stronger effect. '
                      'Using it at a Ley Line grants Attuned for 1 hour, raising the bonus to 100%. Attuned persists through death.'},
     '1259686': {'d': 'Increases your movement speed by 15% for 15 sec. Using it at an elemental convergence grants Charged for 1 hour, '
                      'raising the bonus to 30%. Charged persists through death.'},
