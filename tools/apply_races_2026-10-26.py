@@ -34,7 +34,17 @@ OVERLAY = {
                      'Using it at a Ley Line grants Attuned for 1 hour, raising the bonus to 100%. Attuned persists through death.'},
     '1259686': {'d': 'Increases your movement speed by 15% for 15 sec. Using it at an elemental convergence grants Charged for 1 hour, '
                      'raising the bonus to 30%. Charged persists through death.'},
+    # Additions posted 2026-10-27 in the same thread
+    '20572': {'cd': '2 min cooldown'},  # Orc Blood Fury (was 3 min)
+    '20554': {'d': 'Increases your spellcasting and attack speed by 10% for 15 sec.'},  # Troll Berserking (was 10 sec)
+    '1260189': {'d': 'Your spells and attacks have a 20% chance to drain Health from the target, up to 5% of your maximum Health. '
+                     '15 sec internal cooldown.'},
+    '1260201': {'d': 'Your spells and attacks have a 30% chance to drain Health from the target, up to 5% of your maximum Health. '
+                     '15 sec internal cooldown.'},
 }
+# Skyborne clarification: Attuned and Charged are removed on entering a raid
+OVERLAY['1259705']['d'] = OVERLAY['1259705']['d'].replace('persists through death.', 'persists through death and is removed on entering a raid.')
+OVERLAY['1259686']['d'] = OVERLAY['1259686']['d'].replace('persists through death.', 'persists through death and is removed on entering a raid.')
 ADD = {  # race -> [(after-which-id or None, id, spell)]
     '3': [('1259721', ARTISAN, {'n': "Artisan's Precision", 'i': 'ability_marksmanship',
                                 'd': 'Increases hit chance with spells and attacks by 1%.'})],
